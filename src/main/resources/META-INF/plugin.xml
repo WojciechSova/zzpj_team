@@ -1,0 +1,29 @@
+<idea-plugin>
+    <id>pl.zzpj.plugin</id>
+    <name>Nasza wtyczka</name>
+    <vendor email="a@nieistnieje.com" url="http://www.nieistnieje.com">Nie istnieje</vendor>
+
+    <description><![CDATA[
+    Nasza super wtyczka aaaaaaaaaaaaaaaaaaaaaaaaa
+    ]]></description>
+
+    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+        <group id="OurWtyczka.Reminder" text="Wtyczka">
+            <add-to-group group-id="MainMenu" anchor="last"/>
+            <action class="pl.zzpj.Action" id="test.Action.ReminderSettings" text="Ustawienia"/>
+            <action class="pl.zzpj.LeftoverTime" id="test.Action.ReminderCancel" text="Pozostaly czas"/>
+        </group>
+    </actions>
+
+
+
+</idea-plugin>
