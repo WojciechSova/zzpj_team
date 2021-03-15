@@ -19,6 +19,7 @@ dependencies {
 intellij {
     version '2020.3.1'
 }
+
 patchPluginXml {
     changeNotes """
       Add change notes here.<br>
