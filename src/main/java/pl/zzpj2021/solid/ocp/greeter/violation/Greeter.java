@@ -5,17 +5,15 @@ public class Greeter {
     String formality;
 
     public String greet() {
-        if (this.formality == "formal") {
-            return "Good evening, sir.";
-        }
-        else if (this.formality == "casual") {
-            return "Sup bro?";
-        }
-        else if (this.formality == "intimate") {
-            return "Hello Darling!";
-        }
-        else {
-            return "Hello.";
+        switch (this.formality) {
+            case "formal":
+                return "Good evening, sir.";
+            case "casual":
+                return "Sup bro?";
+            case "intimate":
+                return "Hello Darling!";
+            default:
+                return "Hello.";
         }
     }
 
