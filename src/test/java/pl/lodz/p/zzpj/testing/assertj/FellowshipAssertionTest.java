@@ -47,14 +47,11 @@ public class FellowshipAssertionTest {
 
     @Test
     public void shouldContainTupleForBoromirSamAndLegolas() {
-        // Extracting multiple values at once (using tuple to group them)
-        // Create tuples with name and race name
-//        Tuple boromir = tuple("Boromir", "MAN");
-//        Tuple sam = tuple("Boromir", "MAN");
-//        Tuple legolas = tuple("Boromir", "MAN");
-//
-//
-//        assertThat(fellowship)
+        assertThat(fellowship).extracting(Fellow::getName, Fellow::getRace)
+                .contains(
+                        tuple( "Boromir", Fellow.Race.MAN),
+                        tuple("Sam", Fellow.Race.HOBBIT),
+                        tuple("Legolas", Fellow.Race.ELF));
     }
 
 
