@@ -10,8 +10,7 @@ import org.junit.runner.RunWith;
 import static junitparams.JUnitParamsRunner.$;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(JUnitParamsRunner.class)
 public class SimpleCalculatorTest {
@@ -32,13 +31,15 @@ public class SimpleCalculatorTest {
 
     @Test
     public void shouldAddTwoNumbers() {
-
+        assertEquals(5, sut.add(2, 3), 0);
+        assertEquals(6, sut.add(2, 3), 1);
+        assertNotEquals(5, sut.add(1, 3), 0);
     }
 
     @Test
     @Parameters({"3", "7", "73"})
     public void shouldCheckIfNumberIsPrime(int prime) {
-
+        assertTrue(sut.isPrime(prime));
     }
 
     @Test
@@ -57,6 +58,6 @@ public class SimpleCalculatorTest {
 
     @Test(expected = CannotDivideByZeroException.class)
     public void shouldThrowAnException() throws CannotDivideByZeroException {
-
+        sut.divide(4, 0);
     }
 }
