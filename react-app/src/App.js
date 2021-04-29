@@ -1,13 +1,18 @@
 import logo from './logo.svg';
+import sound from './waiting.mp3';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <audio autoPlay loop hidden>
+          <source src={sound}/>
+        </audio>
+          <img src={logo} className="App-logo" alt="logo"/>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Bank opening soon...
+          <br/>Firefox recommended...
         </p>
         <a
           className="App-link"
