@@ -7,6 +7,7 @@
     <modules>
         <module>applicationCore</module>
         <module>repositoriesAdapters</module>
+        <module>rest</module>
     </modules>
 
     <parent>
