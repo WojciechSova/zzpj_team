@@ -4,14 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public abstract class AccountEnt {
 
-    private UUID uuid;
+    @Id
+    private Long id;
     private String login;
     private String password;
     private String firstName;

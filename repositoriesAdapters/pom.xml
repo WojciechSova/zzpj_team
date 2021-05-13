@@ -17,5 +17,6 @@
 
   <modules>
     <module>dataModel</module>
+      <module>repositories</module>
   </modules>
 </project>

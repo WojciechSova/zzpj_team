@@ -2,12 +2,15 @@ package pl.zzpj.modelEnt.usersEnt;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import pl.zzpj.modelEnt.CurrencyEnt;
 
-import java.util.UUID;
+import javax.persistence.Entity;
 
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Entity
 public class ClientEnt extends AccountEnt {
 
     private String accountNumber;
@@ -15,9 +18,9 @@ public class ClientEnt extends AccountEnt {
     private double debt;
     private CurrencyEnt currency;
 
-    public ClientEnt(UUID uuid, String login, String password, String firstName, String lastName,
+    public ClientEnt(Long id, String login, String password, String firstName, String lastName,
                      String accountNumber, double accountState, double debt, CurrencyEnt currency) {
-        super(uuid, login, password, firstName, lastName);
+        super(id, login, password, firstName, lastName);
         this.accountNumber = accountNumber;
         this.accountState = accountState;
         this.debt = debt;
