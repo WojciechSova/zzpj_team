@@ -9,7 +9,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public abstract class Account {
 
-    private UUID uuid;
+    private Long id;
     private String login;
     private String password;
     private String firstName;

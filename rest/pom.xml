@@ -17,5 +17,6 @@
 
   <modules>
     <module>restDataModel</module>
+    <module>restAdapters</module>
   </modules>
 </project>

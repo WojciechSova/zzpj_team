@@ -14,11 +14,10 @@ import java.util.UUID;
 @NoArgsConstructor
 public abstract class AccountDto {
 
-    private UUID uuid;
+    private Long id;
     private String login;
 
     @ToString.Exclude
-    @Getter(AccessLevel.NONE)
     private String password;
 
     private String firstName;

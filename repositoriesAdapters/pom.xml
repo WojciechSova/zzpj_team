@@ -18,5 +18,6 @@
   <modules>
     <module>dataModel</module>
       <module>repositories</module>
+    <module>repositoryAdapter</module>
   </modules>
 </project>

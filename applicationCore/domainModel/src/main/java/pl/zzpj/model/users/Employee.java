@@ -1,4 +1,11 @@
 package pl.zzpj.model.users;
 
-public class Employee {
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+public class Employee extends Account {
 }
