@@ -2,15 +2,21 @@ package pl.zzpj.services;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import pl.zzpj.controller.AccountCRUDUseCase;
+import pl.zzpj.controller.SignInUseCase;
 import pl.zzpj.infrastructure.AccountCRUDPort;
+import pl.zzpj.model.UserCredentials;
+import pl.zzpj.model.UserPrincipal;
 import pl.zzpj.model.users.Account;
 
 import java.util.List;
 
 @Service
-public class AccountService implements AccountCRUDUseCase {
+public class AccountService implements AccountCRUDUseCase, UserDetailsService, SignInUseCase {
 
     private final AccountCRUDPort accountCRUDPort;
 
@@ -42,5 +48,19 @@ public class AccountService implements AccountCRUDUseCase {
     @Override
     public List<Account> findAll() {
         return accountCRUDPort.findAll();
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        Account account = accountCRUDPort.findByLogin(login);
+        if (account == null) {
+            throw new UsernameNotFoundException(login);
+        }
+        return new UserPrincipal(account);
+    }
+
+    @Override
+    public UserDetails signIn(UserCredentials userCredentials) {
+        return loadUserByUsername(userCredentials.getLogin());
     }
 }
