@@ -8,6 +8,7 @@
         <module>applicationCore</module>
         <module>repositoriesAdapters</module>
         <module>rest</module>
+        <module>applicationPorts</module>
     </modules>
 
     <parent>
