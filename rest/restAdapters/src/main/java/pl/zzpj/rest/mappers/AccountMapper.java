@@ -15,7 +15,16 @@ public class AccountMapper {
         AccountDto accountDto;
 
         if (account instanceof Client) {
-            accountDto = new ClientDto();
+            Client client = (Client) account;
+            ClientDto clientDto = new ClientDto();
+            clientDto.setCurrency(
+                    CurrencyMapper.mapToCurrencyDto(client.getCurrency())
+            );
+            clientDto.setAccountNumber(client.getAccountNumber());
+            clientDto.setAccountState(client.getAccountState());
+            clientDto.setDebt(client.getDebt());
+
+            accountDto = clientDto;
         } else if (account instanceof Admin) {
             accountDto = new AdminDto();
         } else {
@@ -35,7 +44,16 @@ public class AccountMapper {
         Account account;
 
         if (accountDto instanceof ClientDto) {
-            account = new Client();
+            ClientDto clientDto = (ClientDto) accountDto;
+            Client client = new Client();
+            client.setCurrency(
+                    CurrencyMapper.mapToCurrency(clientDto.getCurrency())
+            );
+            client.setAccountNumber(clientDto.getAccountNumber());
+            client.setAccountState(clientDto.getAccountState());
+            client.setDebt(clientDto.getDebt());
+
+            account = client;
         } else if (accountDto instanceof AdminDto) {
             account = new Admin();
         } else {
