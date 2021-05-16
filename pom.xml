@@ -6,7 +6,7 @@
 
     <modules>
         <module>applicationCore</module>
-        <module>repositoriesAdapters</module>
+        <module>dataSource</module>
         <module>rest</module>
         <module>applicationPorts</module>
         <module>web</module>
