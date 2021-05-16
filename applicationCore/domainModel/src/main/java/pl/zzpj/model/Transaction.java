@@ -3,6 +3,7 @@ package pl.zzpj.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.zzpj.model.users.Account;
+import pl.zzpj.model.users.Client;
 
 import java.sql.Timestamp;
 
@@ -10,8 +11,8 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class Transaction {
 
-    private Account from;
-    private Account to;
+    private Client from;
+    private Client to;
     private double amount;
     private Timestamp date;
 }
