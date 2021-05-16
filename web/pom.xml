@@ -3,31 +3,32 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>repositoriesAdapters</artifactId>
+        <artifactId>zzpj</artifactId>
         <groupId>pl.zzpj</groupId>
         <version>0.1-SNAPSHOT</version>
     </parent>
+
+    <packaging>war</packaging>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>repositoryAdapter</artifactId>
+    <artifactId>web</artifactId>
 
-    <name>repositoryAdapter</name>
+    <name>web</name>
+
     <dependencies>
         <dependency>
             <groupId>pl.zzpj</groupId>
-            <artifactId>domainModel</artifactId>
+            <artifactId>restControllers</artifactId>
             <version>0.1-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>pl.zzpj</groupId>
-            <artifactId>dataModel</artifactId>
+            <artifactId>repositoryAdapter</artifactId>
             <version>0.1-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>pl.zzpj</groupId>
-            <artifactId>applicationPorts</artifactId>
+            <artifactId>applicationServices</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

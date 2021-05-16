@@ -1,8 +1,12 @@
+package pl.zzpj.controllers;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.zzpj.controller.AccountCRUDUseCase;
+import pl.zzpj.model.users.Account;
+import pl.zzpj.model.users.Admin;
 import pl.zzpj.modelDto.usersDto.AccountDto;
 import pl.zzpj.rest.mappers.AccountMapper;
 

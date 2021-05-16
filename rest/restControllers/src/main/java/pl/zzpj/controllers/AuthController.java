@@ -1,3 +1,5 @@
+package pl.zzpj.controllers;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.*;
@@ -13,21 +15,21 @@ import pl.zzpj.rest.mappers.UserCredentialsMapper;
 public class AuthController {
 
     private final SignInUseCase signInUseCase;
-    private final AuthenticationManager authenticationManager;
+//    private final AuthenticationManager authenticationManager;
 
     @Autowired
-    public AuthController(SignInUseCase signInUseCase, AuthenticationManager authenticationManager) {
+    public AuthController(SignInUseCase signInUseCase) {
         this.signInUseCase = signInUseCase;
-        this.authenticationManager = authenticationManager;
+//        this.authenticationManager = authenticationManager;
     }
 
     @PostMapping
     public void signIn(UserCredentialsDto userCredentialsDto) {
         try {
             userCredentialsDto.setPassword(DigestUtils.sha512Hex(userCredentialsDto.getPassword()));
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(userCredentialsDto.getLogin(), userCredentialsDto.getPassword())
-            );
+//            authenticationManager.authenticate(
+//                    new UsernamePasswordAuthenticationToken(userCredentialsDto.getLogin(), userCredentialsDto.getPassword())
+//            );
         } catch (BadCredentialsException | LockedException | DisabledException ex) {
             return;
         }
