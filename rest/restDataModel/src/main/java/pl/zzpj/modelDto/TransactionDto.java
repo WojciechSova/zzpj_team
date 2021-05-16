@@ -3,7 +3,6 @@ package pl.zzpj.modelDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.zzpj.modelDto.usersDto.ClientDto;
 
 import java.sql.Timestamp;
 
@@ -12,8 +11,8 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class TransactionDto {
 
-    private ClientDto from;
-    private ClientDto to;
+    private AccountDto from;
+    private AccountDto to;
     private double amount;
     private Timestamp date;
 

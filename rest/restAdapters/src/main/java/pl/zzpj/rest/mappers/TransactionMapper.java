@@ -2,7 +2,7 @@ package pl.zzpj.rest.mappers;
 
 import pl.zzpj.model.Transaction;
 import pl.zzpj.modelDto.TransactionDto;
-import pl.zzpj.modelDto.usersDto.ClientDto;
+import pl.zzpj.modelDto.AccountDto;
 
 public class TransactionMapper {
 
@@ -11,8 +11,8 @@ public class TransactionMapper {
 
         transactionDto.setDate(transaction.getDate());
         transactionDto.setAmount(transaction.getAmount());
-        transactionDto.setFrom((ClientDto) AccountMapper.mapToAccountDto(transaction.getFrom()));
-        transactionDto.setTo((ClientDto) AccountMapper.mapToAccountDto(transaction.getTo()));
+        transactionDto.setFrom((AccountDto) AccountMapper.mapToAccountDto(transaction.getFrom()));
+        transactionDto.setTo((AccountDto) AccountMapper.mapToAccountDto(transaction.getTo()));
 
         return transactionDto;
     }

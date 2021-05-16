@@ -2,7 +2,6 @@ package pl.zzpj.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.zzpj.model.users.Account;
 
 import java.sql.Timestamp;
 

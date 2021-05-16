@@ -3,7 +3,6 @@ package pl.zzpj.model;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import pl.zzpj.model.users.Account;
 
 import java.util.Collection;
 

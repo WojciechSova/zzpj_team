@@ -1,17 +1,24 @@
 package pl.zzpj.repository.adapters;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.zzpj.infrastructure.AccountCRUDPort;
-import pl.zzpj.model.users.Account;
+import pl.zzpj.model.Account;
+import pl.zzpj.repositories.AccountRepository;
+import pl.zzpj.repository.mappers.AccountMapper;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class AccountRepositoryAdapter implements AccountCRUDPort {
 
+    @Autowired
+    AccountRepository accountRepository;
+
     @Override
     public void addAccount(Account account) {
-
+        accountRepository.saveAndFlush(AccountMapper.mapToAccountEnt(account));
     }
 
     @Override
@@ -31,6 +38,6 @@ public class AccountRepositoryAdapter implements AccountCRUDPort {
 
     @Override
     public List<Account> findAll() {
-        return null;
+        return accountRepository.findAll().stream().map(AccountMapper::mapToAccount).collect(Collectors.toList());
     }
 }

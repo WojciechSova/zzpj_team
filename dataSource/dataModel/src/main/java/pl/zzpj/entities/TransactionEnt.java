@@ -3,7 +3,6 @@ package pl.zzpj.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.zzpj.entities.users.ClientEnt;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -12,16 +11,17 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "transactions")
 public class TransactionEnt {
 
     @Id
     private Long id;
 
     @ManyToOne
-    private ClientEnt from;
+    private AccountEnt from;
 
     @ManyToOne
-    private ClientEnt to;
+    private AccountEnt to;
     private double amount;
     private Timestamp date;
 }

@@ -11,7 +11,7 @@ import pl.zzpj.controller.SignInUseCase;
 import pl.zzpj.infrastructure.AccountCRUDPort;
 import pl.zzpj.model.UserCredentials;
 import pl.zzpj.model.UserPrincipal;
-import pl.zzpj.model.users.Account;
+import pl.zzpj.model.Account;
 
 import java.util.List;
 

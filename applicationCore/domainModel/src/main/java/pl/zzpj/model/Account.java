@@ -1,17 +1,20 @@
-package pl.zzpj.model.users;
+package pl.zzpj.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
 @Data
 @NoArgsConstructor
-public abstract class Account {
+public class Account {
 
     private Long id;
     private String login;
     private String password;
     private String firstName;
     private String lastName;
+    private String accountNumber;
+    private Double accountState;
+    private Double debt;
+    private Currency currency;
+    private AccessLevel accessLevel;
 }

@@ -3,7 +3,7 @@ package pl.zzpj.repository.mappers;
 import pl.zzpj.model.Transaction;
 
 import pl.zzpj.entities.TransactionEnt;
-import pl.zzpj.entities.users.ClientEnt;
+import pl.zzpj.entities.AccountEnt;
 
 public class TransactionMapper {
 
@@ -12,8 +12,8 @@ public class TransactionMapper {
 
         transactionEnt.setDate(transaction.getDate());
         transactionEnt.setAmount(transaction.getAmount());
-        transactionEnt.setFrom((ClientEnt) AccountMapper.mapToAccountEnt(transaction.getFrom()));
-        transactionEnt.setTo((ClientEnt) AccountMapper.mapToAccountEnt(transaction.getTo()));
+        transactionEnt.setFrom((AccountEnt) AccountMapper.mapToAccountEnt(transaction.getFrom()));
+        transactionEnt.setTo((AccountEnt) AccountMapper.mapToAccountEnt(transaction.getTo()));
 
         return transactionEnt;
     }

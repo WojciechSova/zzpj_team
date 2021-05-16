@@ -1,18 +1,14 @@
-package pl.zzpj.modelDto.usersDto;
+package pl.zzpj.modelDto;
 
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
-import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class AccountDto {
+public class AccountDto {
 
     private Long id;
     private String login;
@@ -22,4 +18,9 @@ public abstract class AccountDto {
 
     private String firstName;
     private String lastName;
+    private String accountNumber;
+    private Double accountState;
+    private Double debt;
+    private CurrencyDto currency;
+    private AccessLevelDto accessLevel;
 }

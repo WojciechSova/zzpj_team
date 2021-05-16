@@ -1,6 +1,6 @@
 package pl.zzpj.controller;
 
-import pl.zzpj.model.users.Account;
+import pl.zzpj.model.Account;
 
 import java.util.List;
 
