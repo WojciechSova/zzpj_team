@@ -29,4 +29,8 @@ public class AccountRestAdapter {
     public List<AccountDto> findAll() {
         return accountCRUDUseCase.findAll().stream().map(AccountMapper::mapToAccountDto).collect(Collectors.toList());
     }
+
+    public void editAccount(String login, AccountDto accountDto) {
+        accountCRUDUseCase.updateAccount(login, AccountMapper.mapToAccount(accountDto));
+    }
 }

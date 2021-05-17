@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.zzpj.dto.AccountDto;
 import pl.zzpj.rest.adapters.AccountRestAdapter;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,5 +29,10 @@ public class AccountController {
     @GetMapping
     public List<AccountDto> getAccounts() {
         return accountRestAdapter.findAll();
+    }
+
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, path = "/edit/{login}")
+    public void editAccount(@PathVariable("login") String login, @RequestBody AccountDto accountDto) {
+        this.accountRestAdapter.editAccount(login, accountDto);
     }
 }
