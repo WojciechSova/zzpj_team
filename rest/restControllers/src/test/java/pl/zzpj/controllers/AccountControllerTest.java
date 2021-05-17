@@ -8,6 +8,8 @@ import org.mockito.MockitoAnnotations;
 import pl.zzpj.dto.AccountDto;
 import pl.zzpj.rest.adapters.AccountRestAdapter;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
@@ -31,5 +33,17 @@ class AccountControllerTest {
         accountDto.setLogin(login);
         when(accountRestAdapter.findByLogin(login)).thenReturn(accountDto);
         assertEquals(accountDto, accountController.getAccount(login));
+    }
+
+    @Test
+    void getAccounts() {
+        AccountDto accountDto = new AccountDto();
+        AccountDto accountDto2 = new AccountDto();
+        String login = "login";
+        String login2 = "login2";
+        accountDto.setLogin(login);
+        accountDto2.setLogin(login2);
+        when(accountRestAdapter.findAll()).thenReturn(Arrays.asList(accountDto, accountDto2));
+        assertEquals(Arrays.asList(accountDto, accountDto2), accountController.getAccounts());
     }
 }

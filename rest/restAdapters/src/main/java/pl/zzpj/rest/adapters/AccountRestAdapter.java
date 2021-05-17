@@ -6,6 +6,9 @@ import pl.zzpj.controller.AccountCRUDUseCase;
 import pl.zzpj.dto.AccountDto;
 import pl.zzpj.rest.mappers.AccountMapper;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Controller
 public class AccountRestAdapter {
     private final AccountCRUDUseCase accountCRUDUseCase;
@@ -21,5 +24,9 @@ public class AccountRestAdapter {
 
     public AccountDto findByLogin(String login) {
         return AccountMapper.mapToAccountDto(accountCRUDUseCase.findByLogin(login));
+    }
+
+    public List<AccountDto> findAll() {
+        return accountCRUDUseCase.findAll().stream().map(AccountMapper::mapToAccountDto).collect(Collectors.toList());
     }
 }
