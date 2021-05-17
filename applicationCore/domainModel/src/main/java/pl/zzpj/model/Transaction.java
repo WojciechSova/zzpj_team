@@ -9,8 +9,8 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class Transaction {
 
-    private Client from;
-    private Client to;
+    private Account from;
+    private Account to;
     private double amount;
     private Timestamp date;
 }
