@@ -39,14 +39,15 @@ public class AccountMapper {
         account.setAccountNumber(accountDto.getAccountNumber());
         account.setAccountState(accountDto.getAccountState());
         account.setDebt(accountDto.getDebt());
+
         if (accountDto.getCurrency() != null) {
             account.setCurrency(CurrencyMapper.mapToCurrency(accountDto.getCurrency()));
         }
+
         AccessLevel al = new AccessLevel();
         al.setLevel(accountDto.getAccessLevel().getLevel());
         al.setId(accountDto.getAccessLevel().getId());
         account.setAccessLevel(al);
-
 
         return account;
     }
