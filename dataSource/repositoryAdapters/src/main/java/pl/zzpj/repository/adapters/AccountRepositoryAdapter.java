@@ -13,8 +13,12 @@ import java.util.stream.Collectors;
 @Repository
 public class AccountRepositoryAdapter implements AccountCRUDPort {
 
+    final AccountRepository accountRepository;
+
     @Autowired
-    AccountRepository accountRepository;
+    public AccountRepositoryAdapter(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
 
     @Override
     public void addAccount(Account account) {
@@ -33,7 +37,7 @@ public class AccountRepositoryAdapter implements AccountCRUDPort {
 
     @Override
     public Account findByLogin(String login) {
-        return null;
+        return AccountMapper.mapToAccount(accountRepository.findByLogin(login));
     }
 
     @Override
