@@ -1,16 +1,12 @@
 package pl.zzpj.rest.mappers;
 
 import org.junit.jupiter.api.Test;
+import pl.zzpj.model.AccessLevel;
+import pl.zzpj.model.Account;
 import pl.zzpj.model.Currency;
-import pl.zzpj.model.users.Account;
-import pl.zzpj.model.users.Admin;
-import pl.zzpj.model.users.Client;
-import pl.zzpj.model.users.Employee;
+import pl.zzpj.modelDto.AccessLevelDto;
+import pl.zzpj.modelDto.AccountDto;
 import pl.zzpj.modelDto.CurrencyDto;
-import pl.zzpj.modelDto.usersDto.AccountDto;
-import pl.zzpj.modelDto.usersDto.AdminDto;
-import pl.zzpj.modelDto.usersDto.ClientDto;
-import pl.zzpj.modelDto.usersDto.EmployeeDto;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,136 +14,67 @@ class AccountMapperTest {
 
     @Test
     void mapToAccountDto() {
-        //Client
-        Client client = new Client();
+        Account account = new Account();
+        AccessLevel accessLevel = new AccessLevel();
+        accessLevel.setLevel("ADMIN");
 
-        client.setLogin("clogin");
-        client.setId(10L);
-        client.setFirstName("cFirstName");
-        client.setLastName("cLastName");
-        client.setPassword("cPassword");
-        client.setAccountNumber("cNumber");
-        client.setAccountState(200);
-        client.setDebt(500);
-        client.setCurrency(Currency.EUR);
+        account.setAccessLevel(accessLevel);
+        account.setLogin("clogin");
+        account.setId(10L);
+        account.setFirstName("cFirstName");
+        account.setLastName("cLastName");
+        account.setPassword("cPassword");
+        account.setAccountNumber("cNumber");
+        account.setAccountState(200.);
+        account.setDebt(500.);
+        account.setCurrency(Currency.EUR);
 
-        AccountDto clientDto = AccountMapper.mapToAccountDto(client);
+        AccountDto accountDto = AccountMapper.mapToAccountDto(account);
 
-        assertTrue(clientDto instanceof ClientDto);
+        assertNotNull(accountDto.getAccessLevel());
+        assertEquals("ADMIN", accountDto.getAccessLevel().getLevel());
 
-        assertEquals("clogin", clientDto.getLogin());
-        assertEquals(10L, clientDto.getId());
-        assertEquals("cFirstName", clientDto.getFirstName());
-        assertEquals("cLastName", clientDto.getLastName());
-        assertEquals("cPassword", clientDto.getPassword());
-        assertEquals("cNumber", ((ClientDto) clientDto).getAccountNumber());
-        assertEquals(200, ((ClientDto) clientDto).getAccountState());
-        assertEquals(500, ((ClientDto) clientDto).getDebt());
-        assertEquals(CurrencyDto.EUR, ((ClientDto) clientDto).getCurrency());
-
-        //Admin
-        Admin admin = new Admin();
-
-        admin.setLogin("alogin");
-        admin.setId(20L);
-        admin.setFirstName("aFirstName");
-        admin.setLastName("aLastName");
-        admin.setPassword("aPassword");
-
-        AccountDto adminDto = AccountMapper.mapToAccountDto(admin);
-
-        assertTrue(adminDto instanceof AdminDto);
-
-        assertEquals("alogin", adminDto.getLogin());
-        assertEquals(20L, adminDto.getId());
-        assertEquals("aFirstName", adminDto.getFirstName());
-        assertEquals("aLastName", adminDto.getLastName());
-        assertEquals("aPassword", adminDto.getPassword());
-
-        //Employee
-        Employee employee = new Employee();
-
-        employee.setLogin("elogin");
-        employee.setId(30L);
-        employee.setFirstName("eFirstName");
-        employee.setLastName("eLastName");
-        employee.setPassword("ePassword");
-
-        AccountDto employeeDto = AccountMapper.mapToAccountDto(employee);
-
-        assertTrue(employeeDto instanceof EmployeeDto);
-
-        assertEquals("elogin", employeeDto.getLogin());
-        assertEquals(30L, employeeDto.getId());
-        assertEquals("eFirstName", employeeDto.getFirstName());
-        assertEquals("eLastName", employeeDto.getLastName());
-        assertEquals("ePassword", employeeDto.getPassword());
+        assertEquals("clogin", accountDto.getLogin());
+        assertEquals(10L, accountDto.getId());
+        assertEquals("cFirstName", accountDto.getFirstName());
+        assertEquals("cLastName", accountDto.getLastName());
+        assertEquals("cPassword", accountDto.getPassword());
+        assertEquals("cNumber", accountDto.getAccountNumber());
+        assertEquals(200, accountDto.getAccountState());
+        assertEquals(500, accountDto.getDebt());
+        assertEquals(CurrencyDto.EUR, accountDto.getCurrency());
     }
 
     @Test
     void mapToAccount() {
-        //Client
-        ClientDto clientDto = new ClientDto();
-        clientDto.setLogin("clogin");
-        clientDto.setId(10L);
-        clientDto.setFirstName("cFirstName");
-        clientDto.setLastName("cLastName");
-        clientDto.setPassword("cPassword");
-        clientDto.setAccountNumber("cNumber");
-        clientDto.setAccountState(200);
-        clientDto.setDebt(500);
-        clientDto.setCurrency(CurrencyDto.EUR);
+        AccountDto accountDto = new AccountDto();
 
-        Account client = AccountMapper.mapToAccount(clientDto);
+        AccessLevelDto accessLevel = new AccessLevelDto();
+        accessLevel.setLevel("ADMIN");
 
-        assertTrue(client instanceof Client);
+        accountDto.setAccessLevel(accessLevel);
+        accountDto.setLogin("clogin");
+        accountDto.setId(10L);
+        accountDto.setFirstName("cFirstName");
+        accountDto.setLastName("cLastName");
+        accountDto.setPassword("cPassword");
+        accountDto.setAccountNumber("cNumber");
+        accountDto.setAccountState(200.);
+        accountDto.setDebt(500.);
+        accountDto.setCurrency(CurrencyDto.EUR);
 
-        assertEquals("clogin", client.getLogin());
-        assertEquals(10L, client.getId());
-        assertEquals("cFirstName", client.getFirstName());
-        assertEquals("cLastName", client.getLastName());
-        assertEquals("cPassword", client.getPassword());
-        assertEquals("cNumber", ((Client) client).getAccountNumber());
-        assertEquals(200, ((Client) client).getAccountState());
-        assertEquals(500, ((Client) client).getDebt());
-        assertEquals(Currency.EUR, ((Client) client).getCurrency());
+        Account account = AccountMapper.mapToAccount(accountDto);
 
-        //Admin
-        AdminDto adminDto = new AdminDto();
-
-        adminDto.setLogin("alogin");
-        adminDto.setId(20L);
-        adminDto.setFirstName("aFirstName");
-        adminDto.setLastName("aLastName");
-        adminDto.setPassword("aPassword");
-
-        Account admin = AccountMapper.mapToAccount(adminDto);
-
-        assertTrue(admin instanceof Admin);
-
-        assertEquals("alogin", admin.getLogin());
-        assertEquals(20L, admin.getId());
-        assertEquals("aFirstName", admin.getFirstName());
-        assertEquals("aLastName", admin.getLastName());
-        assertEquals("aPassword", admin.getPassword());
-
-        //Employee
-        EmployeeDto employeeDto = new EmployeeDto();
-
-        employeeDto.setLogin("elogin");
-        employeeDto.setId(30L);
-        employeeDto.setFirstName("eFirstName");
-        employeeDto.setLastName("eLastName");
-        employeeDto.setPassword("ePassword");
-
-        Account employee = AccountMapper.mapToAccount(employeeDto);
-
-        assertTrue(employee instanceof Employee);
-
-        assertEquals("elogin", employee.getLogin());
-        assertEquals(30L, employee.getId());
-        assertEquals("eFirstName", employee.getFirstName());
-        assertEquals("eLastName", employee.getLastName());
-        assertEquals("ePassword", employee.getPassword());
+        assertNotNull(account.getAccessLevel());
+        assertEquals("ADMIN", account.getAccessLevel().getLevel());
+        assertEquals("clogin", account.getLogin());
+        assertEquals(10L, account.getId());
+        assertEquals("cFirstName", account.getFirstName());
+        assertEquals("cLastName", account.getLastName());
+        assertEquals("cPassword", account.getPassword());
+        assertEquals("cNumber", account.getAccountNumber());
+        assertEquals(200, account.getAccountState());
+        assertEquals(500, account.getDebt());
+        assertEquals(Currency.EUR, account.getCurrency());
     }
 }

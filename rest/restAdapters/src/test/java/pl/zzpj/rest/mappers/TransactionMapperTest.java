@@ -1,13 +1,14 @@
 package pl.zzpj.rest.mappers;
 
 import org.junit.jupiter.api.Test;
+import pl.zzpj.model.AccessLevel;
+import pl.zzpj.model.Account;
 import pl.zzpj.model.Currency;
 import pl.zzpj.model.Transaction;
-import pl.zzpj.model.users.Account;
-import pl.zzpj.model.users.Client;
+import pl.zzpj.modelDto.AccessLevelDto;
+import pl.zzpj.modelDto.AccountDto;
 import pl.zzpj.modelDto.CurrencyDto;
 import pl.zzpj.modelDto.TransactionDto;
-import pl.zzpj.modelDto.usersDto.ClientDto;
 
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -19,12 +20,16 @@ class TransactionMapperTest {
 
     @Test
     void mapToTransactionDto() {
-        Client from = new Client();
+        AccessLevel accessLevel = new AccessLevel();
+        accessLevel.setLevel("CLIENT");
+        Account from = new Account();
         from.setLogin("from");
         from.setCurrency(Currency.EUR);
-        Client to = new Client();
+        from.setAccessLevel(accessLevel);
+        Account to = new Account();
         to.setLogin("to");
         to.setCurrency(Currency.EUR);
+        to.setAccessLevel(accessLevel);
         Timestamp timestamp = Timestamp.from(Instant.now());
 
         Transaction transaction = new Transaction();
@@ -43,12 +48,16 @@ class TransactionMapperTest {
 
     @Test
     void mapToTransaction() {
-        ClientDto from = new ClientDto();
+        AccessLevelDto accessLevel = new AccessLevelDto();
+        accessLevel.setLevel("CLIENT");
+        AccountDto from = new AccountDto();
         from.setLogin("from");
         from.setCurrency(CurrencyDto.EUR);
-        ClientDto to = new ClientDto();
+        from.setAccessLevel(accessLevel);
+        AccountDto to = new AccountDto();
         to.setLogin("to");
         to.setCurrency(CurrencyDto.EUR);
+        to.setAccessLevel(accessLevel);
         Timestamp timestamp = Timestamp.from(Instant.now());
 
         TransactionDto transactionDto = new TransactionDto();
