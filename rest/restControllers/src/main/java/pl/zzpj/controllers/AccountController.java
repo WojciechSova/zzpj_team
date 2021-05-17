@@ -1,9 +1,7 @@
 package pl.zzpj.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 import pl.zzpj.dto.AccountDto;
 import pl.zzpj.rest.adapters.AccountRestAdapter;
 
@@ -27,5 +25,10 @@ public class AccountController {
     @GetMapping
     public List<AccountDto> getAccounts() {
         return accountRestAdapter.findAll();
+    }
+
+    @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void addAccount(@RequestBody AccountDto accountDto) {
+        accountRestAdapter.addAccount(accountDto);
     }
 }
