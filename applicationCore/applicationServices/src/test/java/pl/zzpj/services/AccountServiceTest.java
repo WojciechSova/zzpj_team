@@ -137,7 +137,7 @@ class AccountServiceTest {
         when(accountCRUDPort.findByLogin(login1)).thenReturn(account1);
         UserCredentials userCredentials = new UserCredentials(login1, password1);
 
-        UserDetails userDetails = accountService.signIn(userCredentials);
+        UserDetails userDetails = accountService.signIn(userCredentials.getLogin());
 
         assertEquals(new UserPrincipal(account1).getUsername(), userDetails.getUsername());
         assertEquals(new UserPrincipal(account1).getPassword(), userDetails.getPassword());

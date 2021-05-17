@@ -13,7 +13,7 @@ CREATE TABLE accounts
 (
     id             bigint      NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 ),
     login          varchar(30) NOT NULL,
-    password       varchar(40) NOT NULL,
+    password       varchar(240) NOT NULL,
     first_name     varchar(30) NOT NULL,
     last_name      varchar(50) NOT NULL,
     account_number varchar(30),
