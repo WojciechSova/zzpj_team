@@ -1,27 +1,24 @@
 package pl.zzpj.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.zzpj.controller.AccountCRUDUseCase;
 import pl.zzpj.dto.AccountDto;
-import pl.zzpj.rest.mappers.AccountMapper;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import pl.zzpj.rest.adapters.AccountRestAdapter;
 
 @RestController
 @RequestMapping("/accounts")
 public class AccountController {
 
-    @Autowired
-    AccountCRUDUseCase accountCRUDUseCase;
+    final AccountRestAdapter accountRestAdapter;
 
-    @GetMapping
-    public List<AccountDto> getAccounts() {
-        return accountCRUDUseCase.findAll().stream()
-                .map(AccountMapper::mapToAccountDto)
-                .collect(Collectors.toList());
+    public AccountController(AccountRestAdapter accountRestAdapter) {
+        this.accountRestAdapter = accountRestAdapter;
+    }
+
+    @GetMapping("/{login}")
+    public AccountDto getAccount(@PathVariable String login) {
+        return accountRestAdapter.findByLogin(login);
     }
 }

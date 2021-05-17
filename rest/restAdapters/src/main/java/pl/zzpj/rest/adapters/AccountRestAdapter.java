@@ -18,4 +18,8 @@ public class AccountRestAdapter {
     public void addAccount(AccountDto accountDto) {
         accountCRUDUseCase.addAccount(AccountMapper.mapToAccount(accountDto));
     }
+
+    public AccountDto findByLogin(String login) {
+        return AccountMapper.mapToAccountDto(accountCRUDUseCase.findByLogin(login));
+    }
 }

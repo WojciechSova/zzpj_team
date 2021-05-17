@@ -23,10 +23,5 @@
       <artifactId>restAdapters</artifactId>
       <version>0.1-SNAPSHOT</version>
     </dependency>
-    <dependency>
-      <groupId>pl.zzpj</groupId>
-      <artifactId>applicationPorts</artifactId>
-      <version>1.0-SNAPSHOT</version>
-    </dependency>
   </dependencies>
 </project>

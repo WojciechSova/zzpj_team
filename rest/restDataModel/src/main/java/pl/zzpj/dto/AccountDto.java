@@ -1,5 +1,6 @@
 package pl.zzpj.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ public class AccountDto {
     private String login;
 
     @ToString.Exclude
+    @JsonIgnore
     private String password;
 
     private String firstName;
