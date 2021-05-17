@@ -1,8 +1,7 @@
 package pl.zzpj.rest.mappers;
 
 import pl.zzpj.model.Transaction;
-import pl.zzpj.modelDto.TransactionDto;
-import pl.zzpj.modelDto.AccountDto;
+import pl.zzpj.dto.TransactionDto;
 
 public class TransactionMapper {
 

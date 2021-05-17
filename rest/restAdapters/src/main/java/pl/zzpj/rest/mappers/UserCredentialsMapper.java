@@ -1,7 +1,7 @@
 package pl.zzpj.rest.mappers;
 
 import pl.zzpj.model.UserCredentials;
-import pl.zzpj.modelDto.UserCredentialsDto;
+import pl.zzpj.dto.UserCredentialsDto;
 
 public class UserCredentialsMapper {
 

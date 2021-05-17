@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.zzpj.controller.SignInUseCase;
-import pl.zzpj.modelDto.UserCredentialsDto;
+import pl.zzpj.dto.UserCredentialsDto;
 import pl.zzpj.rest.mappers.UserCredentialsMapper;
 
 @RestController

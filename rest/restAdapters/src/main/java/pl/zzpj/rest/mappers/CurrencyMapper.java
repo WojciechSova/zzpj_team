@@ -1,7 +1,7 @@
 package pl.zzpj.rest.mappers;
 
 import pl.zzpj.model.Currency;
-import pl.zzpj.modelDto.CurrencyDto;
+import pl.zzpj.dto.CurrencyDto;
 
 public class CurrencyMapper {
 

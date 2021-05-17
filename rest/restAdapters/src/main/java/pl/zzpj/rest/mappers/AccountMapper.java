@@ -2,8 +2,8 @@ package pl.zzpj.rest.mappers;
 
 import pl.zzpj.model.AccessLevel;
 import pl.zzpj.model.Account;
-import pl.zzpj.modelDto.AccessLevelDto;
-import pl.zzpj.modelDto.AccountDto;
+import pl.zzpj.dto.AccessLevelDto;
+import pl.zzpj.dto.AccountDto;
 
 public class AccountMapper {
 

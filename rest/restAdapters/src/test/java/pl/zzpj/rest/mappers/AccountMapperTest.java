@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Test;
 import pl.zzpj.model.AccessLevel;
 import pl.zzpj.model.Account;
 import pl.zzpj.model.Currency;
-import pl.zzpj.modelDto.AccessLevelDto;
-import pl.zzpj.modelDto.AccountDto;
-import pl.zzpj.modelDto.CurrencyDto;
+import pl.zzpj.dto.AccessLevelDto;
+import pl.zzpj.dto.AccountDto;
+import pl.zzpj.dto.CurrencyDto;
 
 import static org.junit.jupiter.api.Assertions.*;
 

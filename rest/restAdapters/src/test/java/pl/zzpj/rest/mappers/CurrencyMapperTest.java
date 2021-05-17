@@ -2,7 +2,7 @@ package pl.zzpj.rest.mappers;
 
 import org.junit.jupiter.api.Test;
 import pl.zzpj.model.Currency;
-import pl.zzpj.modelDto.CurrencyDto;
+import pl.zzpj.dto.CurrencyDto;
 
 import static org.junit.jupiter.api.Assertions.*;
 

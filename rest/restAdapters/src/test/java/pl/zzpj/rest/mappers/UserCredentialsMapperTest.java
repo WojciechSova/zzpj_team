@@ -2,7 +2,7 @@ package pl.zzpj.rest.mappers;
 
 import org.junit.jupiter.api.Test;
 import pl.zzpj.model.UserCredentials;
-import pl.zzpj.modelDto.UserCredentialsDto;
+import pl.zzpj.dto.UserCredentialsDto;
 
 import static org.junit.jupiter.api.Assertions.*;
 

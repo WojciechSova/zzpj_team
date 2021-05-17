@@ -5,12 +5,11 @@ import pl.zzpj.model.AccessLevel;
 import pl.zzpj.model.Account;
 import pl.zzpj.model.Currency;
 import pl.zzpj.model.Transaction;
-import pl.zzpj.modelDto.AccessLevelDto;
-import pl.zzpj.modelDto.AccountDto;
-import pl.zzpj.modelDto.CurrencyDto;
-import pl.zzpj.modelDto.TransactionDto;
+import pl.zzpj.dto.AccessLevelDto;
+import pl.zzpj.dto.AccountDto;
+import pl.zzpj.dto.CurrencyDto;
+import pl.zzpj.dto.TransactionDto;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.Instant;
 
