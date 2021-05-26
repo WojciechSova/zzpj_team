@@ -17,7 +17,6 @@
           <groupId>pl.zzpj</groupId>
           <artifactId>domainModel</artifactId>
           <version>0.1-SNAPSHOT</version>
-          <scope>compile</scope>
       </dependency>
   </dependencies>
 </project>

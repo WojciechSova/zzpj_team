@@ -13,18 +13,18 @@
 
     <name>repositoryAdapters</name>
     <dependencies>
-        <dependency>
-            <groupId>pl.zzpj</groupId>
-            <artifactId>domainModel</artifactId>
-            <version>0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>pl.zzpj</groupId>
-            <artifactId>dataModel</artifactId>
-            <version>0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>pl.zzpj</groupId>-->
+<!--            <artifactId>domainModel</artifactId>-->
+<!--            <version>0.1-SNAPSHOT</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>pl.zzpj</groupId>-->
+<!--            <artifactId>dataModel</artifactId>-->
+<!--            <version>0.1-SNAPSHOT</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>pl.zzpj</groupId>
             <artifactId>applicationPorts</artifactId>
@@ -34,7 +34,7 @@
             <groupId>pl.zzpj</groupId>
             <artifactId>repositories</artifactId>
             <version>0.1-SNAPSHOT</version>
-            <scope>compile</scope>
+<!--            <scope>compile</scope>-->
         </dependency>
     </dependencies>
 </project>

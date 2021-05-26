@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.zzpj.dto.AccountDto;
 import pl.zzpj.rest.adapters.AccountRestAdapter;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/accounts")
 public class AccountController {
@@ -15,6 +17,11 @@ public class AccountController {
 
     public AccountController(AccountRestAdapter accountRestAdapter) {
         this.accountRestAdapter = accountRestAdapter;
+    }
+
+    @GetMapping()
+    public List<AccountDto> getAccounts() {
+        return accountRestAdapter.findAllAccounts();
     }
 
     @GetMapping("/{login}")
