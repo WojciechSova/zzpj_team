@@ -21,11 +21,6 @@ public class AccountController {
         this.accountRestAdapter = accountRestAdapter;
     }
 
-    @GetMapping()
-    public List<AccountDto> getAccounts() {
-        return accountRestAdapter.findAllAccounts();
-    }
-
     @GetMapping("/{login}")
     public AccountDto getAccount(@PathVariable String login) {
         return accountRestAdapter.findByLogin(login);
