@@ -2,10 +2,12 @@ package pl.zzpj.repository.adapters;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import pl.zzpj.entities.AccountEnt;
 import pl.zzpj.infrastructure.AccountCRUDPort;
 import pl.zzpj.model.Account;
 import pl.zzpj.repositories.AccountRepository;
 import pl.zzpj.repository.mappers.AccountMapper;
+import pl.zzpj.repository.mappers.CurrencyMapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,7 +34,13 @@ public class AccountRepositoryAdapter implements AccountCRUDPort {
 
     @Override
     public void updateAccount(String login, Account account) {
-
+        AccountEnt acc = accountRepository.findByLogin(login);
+        acc.setAccountState(account.getAccountState());
+        acc.setCurrency(CurrencyMapper.mapToCurrencyEnt(account.getCurrency()));
+        acc.setFirstName(account.getFirstName());
+        acc.setLastName(account.getLastName());
+        acc.setDebt(account.getDebt());
+        accountRepository.save(acc);
     }
 
     @Override
