@@ -1,0 +1,12 @@
+<div class="flex-item">
+    <h1>Bank</h1>
+    <form action="">
+        <input [(ngModel)]="login" type="text" id="login" name="Login"
+               placeholder="*Login" required>
+        <input [(ngModel)]="password" type="password" id="password" name="Password"
+               placeholder="*Password" required>
+        <button (click)="auth()" class="form-button"
+                translate>Sign in</button>
+    </form>
+    <div *ngIf="error" class="error">Wrong login or password</div>
+</div>

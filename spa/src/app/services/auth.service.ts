@@ -14,11 +14,11 @@ export class AuthService {
     constructor(private http: HttpClient,
                 private cookieService: CookieService,
                 private router: Router) {
-        this.url = 'http://localhost:8080' + '/auth';
+        this.url = 'http://localhost:8080';
     }
 
     auth(login: string, password: string): any {
-        return this.http.post(this.url, {
+        return this.http.post(this.url + '/auth', {
             login,
             password
         }, { observe: 'body', responseType: 'text' });

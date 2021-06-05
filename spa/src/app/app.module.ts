@@ -3,23 +3,35 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CookieService } from 'ngx-cookie-service';
 import { AppComponent } from './app.component';
 import { AuthInterceptor } from "./interceptors/auth-interceptor";
-import { HTTP_INTERCEPTORS } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { LoginComponent } from './login/login.component';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { AppRoutingModule } from "./app-routing.module";
+import { MainComponent } from './main/main.component';
 
 export const httpInterceptorProviders = [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
 ];
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule
-  ],
-  providers: [
-      httpInterceptorProviders,
-      CookieService,
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        LoginComponent,
+        MainComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        BrowserModule,
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+    ],
+    providers: [
+        httpInterceptorProviders,
+        CookieService,
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
