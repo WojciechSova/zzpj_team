@@ -23,7 +23,10 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const authReq = req.clone({setHeaders: {Authorization: 'Bearer ' + this.cookieService.get('token')}});
-        return next.handle(authReq);
+        if (parseInt(this.cookieService.get('exp')) > new Date().getTime() / 1000) {
+            const authReq = req.clone({setHeaders: {Authorization: 'Bearer ' + this.cookieService.get('token')}});
+            return next.handle(authReq);
+        }
+        return next.handle(req);
     }
 }

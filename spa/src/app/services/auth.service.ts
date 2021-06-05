@@ -33,6 +33,7 @@ export class AuthService {
         const tokenInfo: any = jwtDecode(token);
         this.cookieService.set('login', tokenInfo.sub);
         this.cookieService.set('accessLevel', tokenInfo.auth);
+        this.cookieService.set('exp', tokenInfo.exp);
     }
 
     signOut(): void {
@@ -40,5 +41,6 @@ export class AuthService {
         this.cookieService.delete('token');
         this.cookieService.delete('login');
         this.cookieService.delete('accessLevel');
+        this.cookieService.delete('exp');
     }
 }
