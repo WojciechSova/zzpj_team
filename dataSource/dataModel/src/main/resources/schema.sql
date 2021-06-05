@@ -33,6 +33,7 @@ CREATE TABLE transactions
     "to"     bigint                              NOT NULL,
     amount double precision                    NOT NULL,
     date   timestamp DEFAULT current_timestamp NOT NULL,
+    rate    double precision                    NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT fk_from_id FOREIGN KEY ("from") REFERENCES accounts (id),
     CONSTRAINT fk_to_id FOREIGN KEY ("to") REFERENCES accounts (id)

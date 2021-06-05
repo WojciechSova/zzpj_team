@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Data
@@ -15,5 +16,5 @@ public class TransactionDto {
     private AccountDto to;
     private double amount;
     private Timestamp date;
-
+    private BigDecimal rate;
 }

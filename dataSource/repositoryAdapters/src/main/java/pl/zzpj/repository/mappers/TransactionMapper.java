@@ -14,6 +14,7 @@ public class TransactionMapper {
         transactionEnt.setAmount(transaction.getAmount());
         transactionEnt.setFrom((AccountEnt) AccountMapper.mapToAccountEnt(transaction.getFrom()));
         transactionEnt.setTo((AccountEnt) AccountMapper.mapToAccountEnt(transaction.getTo()));
+        transactionEnt.setRate(transaction.getRate());
 
         return transactionEnt;
     }
@@ -25,6 +26,7 @@ public class TransactionMapper {
         transaction.setAmount(transactionEnt.getAmount());
         transaction.setFrom(AccountMapper.mapToAccount(transactionEnt.getFrom()));
         transaction.setTo(AccountMapper.mapToAccount(transactionEnt.getTo()));
+        transaction.setRate(transactionEnt.getRate());
 
         return transaction;
     }

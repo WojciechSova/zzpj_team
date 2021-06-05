@@ -15,7 +15,7 @@ VALUES ('admin', '0885c94ed2e94369bafab182efc19c41624dd8f2b12b79fdfd1c4e8a740397
        ('pracownik', '0885c94ed2e94369bafab182efc19c41624dd8f2b12b79fdfd1c4e8a740397f6335cd241a1713b030476a31ec049ef2c5ec0f8ea3baa22246815bb5ccc74f01c', 'Zdzisław2', 'Kowalski2', 2);
 
 
-INSERT INTO transactions ("from", "to", amount)
-VALUES (1, 2, 10),
-       (2, 3, 15),
-       (2, 4, 5);
+INSERT INTO transactions ("from", "to", amount, rate)
+VALUES (1, 2, 10, 2.50),
+       (2, 3, 15, 3.25),
+       (2, 4, 5, 0.9);

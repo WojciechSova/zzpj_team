@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Data
@@ -24,4 +25,5 @@ public class TransactionEnt {
     private AccountEnt to;
     private double amount;
     private Timestamp date;
+    private BigDecimal rate;
 }

@@ -3,6 +3,7 @@ package pl.zzpj.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Data
@@ -13,4 +14,5 @@ public class Transaction {
     private Account to;
     private double amount;
     private Timestamp date;
+    private BigDecimal rate;
 }
