@@ -24,7 +24,6 @@ export class AddAccountComponent implements OnInit {
     accessLevels = [
         'CLIENT',
         'ADMIN',
-        'EMPLOYEE'
     ];
 
     constructor(private accountService: AccountService,
