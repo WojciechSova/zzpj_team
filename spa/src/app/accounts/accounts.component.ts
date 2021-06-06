@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AccountService} from '../services/account.service';
 import {Account} from "../model/Account";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-accounts',
@@ -11,7 +12,8 @@ export class AccountsComponent implements OnInit {
 
     public accounts: Account[];
 
-    constructor(private accountService: AccountService) {
+    constructor(private accountService: AccountService,
+                private router: Router) {
         this.accounts = [];
         this.getAccounts();
     }
@@ -19,14 +21,19 @@ export class AccountsComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    getAccounts(): Account[] | null {
+    getAccounts(): void {
         this.accountService.getAccounts().subscribe(
             (response: Account[]) => {
                 this.accounts = response;
-                console.log(this.accounts);
             }
         );
+    }
 
-        return null;
+    remove(login: string) : void {
+
+    }
+
+    edit(login: string): void {
+        this.router.navigate([`/accounts/edit/${login}`]);
     }
 }

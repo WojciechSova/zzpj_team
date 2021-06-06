@@ -10,6 +10,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { MainComponent } from './main/main.component';
 import { AccountsComponent } from './accounts/accounts.component';
 import { AddAccountComponent } from './add-account/add-account.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
 
 export const httpInterceptorProviders = [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
@@ -21,7 +22,8 @@ export const httpInterceptorProviders = [
         LoginComponent,
         MainComponent,
         AccountsComponent,
-        AddAccountComponent
+        AddAccountComponent,
+        EditUserComponent
     ],
     imports: [
         BrowserModule,

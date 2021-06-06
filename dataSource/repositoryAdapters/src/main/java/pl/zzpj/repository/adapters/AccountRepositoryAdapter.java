@@ -42,11 +42,14 @@ public class AccountRepositoryAdapter implements AccountCRUDPort {
     @Override
     public void updateAccount(String login, Account account) {
         AccountEnt acc = accountRepository.findByLogin(login);
-        acc.setAccountState(account.getAccountState());
+        AccessLevelEnt accLvl = accessLevelRepository.findByLevel(account.getAccessLevel().getLevel());
         acc.setCurrency(CurrencyMapper.mapToCurrencyEnt(account.getCurrency()));
+        if (account.getPassword() != null && !account.getPassword().isBlank()) {
+            acc.setPassword(account.getPassword());
+        }
         acc.setFirstName(account.getFirstName());
         acc.setLastName(account.getLastName());
-        acc.setDebt(account.getDebt());
+        acc.setAccessLevel(accLvl);
         accountRepository.save(acc);
     }
 

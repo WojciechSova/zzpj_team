@@ -13,6 +13,8 @@
             <td>Account state</td>
             <td>Debt</td>
             <td>Currency</td>
+            <td>Remove</td>
+            <td>Edit</td>
         </tr>
         <tr *ngFor="let account of accounts">
             <td>{{account.login}}</td>
@@ -23,6 +25,16 @@
             <td>{{account.accountState}}</td>
             <td>{{account.debt}}</td>
             <td>{{account.currency}}</td>
+            <td>
+                <button (click)="remove(account.login)">
+                    Remove
+                </button>
+            </td>
+            <td>
+                <button (click)="edit(account.login)">
+                    Edit
+                </button>
+            </td>
         </tr>
     </table>
 </div>

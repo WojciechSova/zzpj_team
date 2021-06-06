@@ -25,7 +25,17 @@ export class AccountService {
     }
 
     addAccounts(acc: Account): any {
-        console.log(acc);
         return this.http.post(this.url + '/accounts/add', acc);
+    }
+
+    getAccount(login: string): any {
+        return this.http.get(this.url + `/accounts/${login}`,{
+            observe: 'body',
+            responseType: 'json'
+        });
+    }
+
+    editAccount(login: string, account: Account) {
+        return this.http.put(this.url + `/accounts/edit/${login}`,account);
     }
 }
