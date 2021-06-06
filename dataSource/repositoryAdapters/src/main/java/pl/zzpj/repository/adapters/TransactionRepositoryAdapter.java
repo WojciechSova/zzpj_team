@@ -23,11 +23,11 @@ public class TransactionRepositoryAdapter implements TransactionPort {
     }
 
     @Override
-    public void withdraw(Account account, double amount) {
+    public void withdraw(Account account, BigDecimal amount) {
         AccountEnt acc = accountRepository.findByLogin(account.getLogin());
-        Double accountState = acc.getAccountState();
-        if (accountState - amount >= 0) {
-            acc.setAccountState(accountState - amount);
+        BigDecimal accountState = acc.getAccountState();
+        if (accountState.subtract(amount).doubleValue() >= 0) {
+            acc.setAccountState(accountState.subtract(amount));
             accountRepository.save(acc);
         }
         else {
@@ -36,21 +36,22 @@ public class TransactionRepositoryAdapter implements TransactionPort {
     }
 
     @Override
-    public void deposit(Account account, double amount) {
+    public void deposit(Account account, BigDecimal amount) {
         AccountEnt acc = accountRepository.findByLogin(account.getLogin());
-        Double accountState = acc.getAccountState();
-        acc.setAccountState(accountState + amount);
+        BigDecimal accountState = acc.getAccountState();
+        acc.setAccountState(accountState.add(amount));
         accountRepository.save(acc);
     }
 
     @Override
-    public void transfer(Account from, Account to, double amount, BigDecimal rate) {
+    public void transfer(Account from, Account to, BigDecimal amount, BigDecimal rate) {
         AccountEnt accFrom = accountRepository.findByLogin(from.getLogin());
         AccountEnt accTo = accountRepository.findByLogin(to.getLogin());
-        Double accountState = accFrom.getAccountState();
-        if (accountState - amount >= 0) {
-            accFrom.setAccountState(accountState - amount * rate.doubleValue());
-            accTo.setAccountState(accountState + amount * rate.doubleValue());
+        BigDecimal accountState = accFrom.getAccountState();
+        if (accountState.subtract(amount).doubleValue() >= 0) {
+            BigDecimal convertedAmount = amount.multiply(BigDecimal.valueOf(rate.doubleValue()));
+            accFrom.setAccountState(accountState.subtract(convertedAmount));
+            accTo.setAccountState(accountState.add(convertedAmount));
             accountRepository.saveAll(List.of(accFrom, accTo));
         }
         else {

@@ -36,12 +36,12 @@ class TransactionRepositoryAdapterTest {
     void initMocks() {
         MockitoAnnotations.openMocks(this);
         from = new Account();
-        from.setAccountState(9999D);
+        from.setAccountState(BigDecimal.valueOf(9999D));
         from.setLogin("konto1");
         from.setCurrency(Currency.GBP);
         from.setAccessLevel(new AccessLevel());
         to = new Account();
-        to.setAccountState(111D);
+        to.setAccountState(BigDecimal.valueOf(111D));
         to.setLogin("konto2");
         to.setCurrency(Currency.PLN);
         to.setAccessLevel(new AccessLevel());
@@ -53,26 +53,26 @@ class TransactionRepositoryAdapterTest {
     @Test
     void withdrawTest() {
         doAnswer(invocationOnMock -> {
-            from.setAccountState(from.getAccountState() - 2000);
+            from.setAccountState(from.getAccountState().subtract(BigDecimal.valueOf(2000)));
             return null;
         }).when(accountRepository).save(any());
-        transactionRepositoryAdapter.withdraw(from, 2000);
+        transactionRepositoryAdapter.withdraw(from, BigDecimal.valueOf(2000));
 
         assertEquals(7999, from.getAccountState());
     }
 
     @Test
     void withdrawExceptionTest() {
-        assertThrows(IllegalStateException.class, () ->transactionRepositoryAdapter.withdraw(from, 10_000D));
+        assertThrows(IllegalStateException.class, () ->transactionRepositoryAdapter.withdraw(from, BigDecimal.valueOf(10_000D)));
     }
 
     @Test
     void depositTest() {
         doAnswer(invocationOnMock -> {
-            from.setAccountState(from.getAccountState() + 2000);
+            from.setAccountState(from.getAccountState().add(BigDecimal.valueOf(2000)));
             return null;
         }).when(accountRepository).save(any());
-        transactionRepositoryAdapter.deposit(from, 2000);
+        transactionRepositoryAdapter.deposit(from, BigDecimal.valueOf(2000));
 
         assertEquals(11_999, from.getAccountState());
     }
@@ -80,11 +80,11 @@ class TransactionRepositoryAdapterTest {
     @Test
     void transferTest() {
         doAnswer(invocationOnMock -> {
-            from.setAccountState(from.getAccountState() - 2000 * 1.5);
-            to.setAccountState(to.getAccountState() + 2000 * 1.5);
+            from.setAccountState(from.getAccountState().subtract(BigDecimal.valueOf(2000 * 1.5)));
+            to.setAccountState(to.getAccountState().add(BigDecimal.valueOf(2000 * 1.5)));
             return null;
         }).when(accountRepository).saveAll(any());
-        transactionRepositoryAdapter.transfer(from, to, 2000, BigDecimal.valueOf(1.5));
+        transactionRepositoryAdapter.transfer(from, to, BigDecimal.valueOf(2000), BigDecimal.valueOf(1.5));
 
         assertEquals(6999, from.getAccountState());
         assertEquals(3111, to.getAccountState());

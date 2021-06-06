@@ -1,0 +1,28 @@
+<div class="flex-item">
+    <div class="links">
+        <a routerLink="/main">Main page</a>
+        <a routerLink="/accounts">Back</a>
+    </div>
+    <form action="">
+        <input [(ngModel)]="login" type="text" id="login" name="Login"
+               placeholder="*Login" required>
+        <input [(ngModel)]="password" type="password" id="password" name="Password"
+               placeholder="*Password" required>
+        <input [(ngModel)]="firstName" type="text" id="firstName" name="First name"
+               placeholder="*First name" required>
+        <input [(ngModel)]="lastName" type="text" id="lastName" name="Last name"
+               placeholder="*Last name" required>
+        <select id="select-currency" [(ngModel)]="currency" name="currency">
+            <option *ngFor="let curr of currencies">
+                {{curr}}
+            </option>
+        </select>
+        <select id="select-access-level" [(ngModel)]="accessLevel" name="accessLevel">
+            <option *ngFor="let al of accessLevels">
+                {{al}}
+            </option>
+        </select>
+        <button (click)="addAccount()" class="form-button"
+                translate>Sign in</button>
+    </form>
+</div>

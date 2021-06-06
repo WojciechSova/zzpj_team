@@ -8,6 +8,8 @@ import pl.zzpj.dto.AccessLevelDto;
 import pl.zzpj.dto.AccountDto;
 import pl.zzpj.dto.CurrencyDto;
 
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class AccountMapperTest {
@@ -25,8 +27,8 @@ class AccountMapperTest {
         account.setLastName("cLastName");
         account.setPassword("cPassword");
         account.setAccountNumber("cNumber");
-        account.setAccountState(200.);
-        account.setDebt(500.);
+        account.setAccountState(BigDecimal.valueOf(200.));
+        account.setDebt(BigDecimal.valueOf(500.));
         account.setCurrency(Currency.EUR);
 
         AccountDto accountDto = AccountMapper.mapToAccountDto(account);
@@ -59,8 +61,8 @@ class AccountMapperTest {
         accountDto.setLastName("cLastName");
         accountDto.setPassword("cPassword");
         accountDto.setAccountNumber("cNumber");
-        accountDto.setAccountState(200.);
-        accountDto.setDebt(500.);
+        accountDto.setAccountState(BigDecimal.valueOf(200.));
+        accountDto.setDebt(BigDecimal.valueOf(500.));
         accountDto.setCurrency(CurrencyDto.EUR);
 
         Account account = AccountMapper.mapToAccount(accountDto);

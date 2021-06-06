@@ -1,5 +1,6 @@
 package pl.zzpj.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import pl.zzpj.dto.AccountDto;
@@ -13,6 +14,7 @@ public class AccountController {
 
     final AccountRestAdapter accountRestAdapter;
 
+    @Autowired
     public AccountController(AccountRestAdapter accountRestAdapter) {
         this.accountRestAdapter = accountRestAdapter;
     }

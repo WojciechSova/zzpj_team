@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AppRoutingModule } from "./app-routing.module";
 import { MainComponent } from './main/main.component';
 import { AccountsComponent } from './accounts/accounts.component';
+import { AddAccountComponent } from './add-account/add-account.component';
 
 export const httpInterceptorProviders = [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
@@ -19,7 +20,8 @@ export const httpInterceptorProviders = [
         AppComponent,
         LoginComponent,
         MainComponent,
-        AccountsComponent
+        AccountsComponent,
+        AddAccountComponent
     ],
     imports: [
         BrowserModule,

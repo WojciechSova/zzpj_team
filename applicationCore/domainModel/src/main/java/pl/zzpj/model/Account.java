@@ -3,6 +3,8 @@ package pl.zzpj.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @NoArgsConstructor
 public class Account {
@@ -13,8 +15,8 @@ public class Account {
     private String firstName;
     private String lastName;
     private String accountNumber;
-    private Double accountState;
-    private Double debt;
+    private BigDecimal accountState;
+    private BigDecimal debt;
     private Currency currency;
     private AccessLevel accessLevel;
 }

@@ -19,17 +19,17 @@ public class TransactionService implements TransactionUseCase {
     }
 
     @Override
-    public void withdraw(Account account, double amount) {
+    public void withdraw(Account account, BigDecimal amount) {
         transactionPort.withdraw(account, amount);
     }
 
     @Override
-    public void deposit(Account account, double amount) {
+    public void deposit(Account account, BigDecimal amount) {
         transactionPort.deposit(account, amount);
     }
 
     @Override
-    public void transfer(Account from, Account to, double amount, BigDecimal rate) throws Exception {
+    public void transfer(Account from, Account to, BigDecimal amount, BigDecimal rate) throws Exception {
         transactionPort.transfer(from, to, amount, CurrencyExchangeService.exchangeFromTo(from.getCurrency(), to.getCurrency()));
     }
 }

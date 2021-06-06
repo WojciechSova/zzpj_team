@@ -6,9 +6,9 @@ import java.math.BigDecimal;
 
 public interface TransactionPort {
 
-    void withdraw(Account account, double amount);
+    void withdraw(Account account, BigDecimal amount);
 
-    void deposit(Account account, double amount);
+    void deposit(Account account, BigDecimal amount);
 
-    void transfer(Account from, Account to, double amount, BigDecimal rate);
+    void transfer(Account from, Account to, BigDecimal amount, BigDecimal rate);
 }

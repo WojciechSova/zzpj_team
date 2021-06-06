@@ -2,9 +2,11 @@ package pl.zzpj.repository.adapters;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import pl.zzpj.entities.AccessLevelEnt;
 import pl.zzpj.entities.AccountEnt;
 import pl.zzpj.infrastructure.AccountCRUDPort;
 import pl.zzpj.model.Account;
+import pl.zzpj.repositories.AccessLevelRepository;
 import pl.zzpj.repositories.AccountRepository;
 import pl.zzpj.repository.mappers.AccountMapper;
 import pl.zzpj.repository.mappers.CurrencyMapper;
@@ -15,16 +17,21 @@ import java.util.stream.Collectors;
 @Repository
 public class AccountRepositoryAdapter implements AccountCRUDPort {
 
-    final AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
+    private final AccessLevelRepository accessLevelRepository;
 
     @Autowired
-    public AccountRepositoryAdapter(AccountRepository accountRepository) {
+    public AccountRepositoryAdapter(AccountRepository accountRepository, AccessLevelRepository accessLevelRepository) {
         this.accountRepository = accountRepository;
+        this.accessLevelRepository = accessLevelRepository;
     }
 
     @Override
     public void addAccount(Account account) {
-        accountRepository.saveAndFlush(AccountMapper.mapToAccountEnt(account));
+        AccessLevelEnt accessLevelEnt = accessLevelRepository.findByLevel(account.getAccessLevel().getLevel());
+        AccountEnt accountEnt = AccountMapper.mapToAccountEnt(account);
+        accountEnt.setAccessLevel(accessLevelEnt);
+        accountRepository.saveAndFlush(accountEnt);
     }
 
     @Override

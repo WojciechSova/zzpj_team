@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { CookieService } from "ngx-cookie-service";
 import { Router } from "@angular/router";
+import {Account} from "../model/Account";
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +22,10 @@ export class AccountService {
             observe: 'body',
             responseType: 'json'
         });
+    }
+
+    addAccounts(acc: Account): any {
+        console.log(acc);
+        return this.http.post(this.url + '/accounts/add', acc);
     }
 }

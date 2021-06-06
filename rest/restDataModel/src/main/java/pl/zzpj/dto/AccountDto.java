@@ -1,10 +1,12 @@
 package pl.zzpj.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor
@@ -15,14 +17,14 @@ public class AccountDto {
     private String login;
 
     @ToString.Exclude
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     private String firstName;
     private String lastName;
     private String accountNumber;
-    private Double accountState;
-    private Double debt;
+    private BigDecimal accountState;
+    private BigDecimal debt;
     private CurrencyDto currency;
     private AccessLevelDto accessLevel;
 }

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor
@@ -22,8 +23,8 @@ public class AccountEnt {
     private String firstName;
     private String lastName;
     private String accountNumber;
-    private Double accountState;
-    private Double debt;
+    private BigDecimal accountState;
+    private BigDecimal debt;
     private CurrencyEnt currency;
     @ManyToOne
     @JoinColumn(name = "access_level", referencedColumnName = "id")

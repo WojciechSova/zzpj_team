@@ -1,6 +1,8 @@
 package pl.zzpj.services;
 
 
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,6 +13,7 @@ import pl.zzpj.infrastructure.AccountCRUDPort;
 import pl.zzpj.model.UserPrincipal;
 import pl.zzpj.model.Account;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -25,7 +28,14 @@ public class AccountService implements AccountCRUDUseCase, SignInUseCase {
 
     @Override
     public void addAccount(Account account) {
+        account.setAccountState(BigDecimal.ZERO);
+        account.setAccountNumber(generateAccountNumber());
+        account.setDebt(BigDecimal.ZERO);
         accountCRUDPort.addAccount(account);
+    }
+
+    private String generateAccountNumber() {
+        return RandomStringUtils.random(16, false, true);
     }
 
     @Override

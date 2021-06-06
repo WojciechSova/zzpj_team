@@ -8,6 +8,8 @@ import pl.zzpj.model.AccessLevel;
 import pl.zzpj.model.Account;
 import pl.zzpj.model.Currency;
 
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class AccountMapperTest {
@@ -25,8 +27,8 @@ class AccountMapperTest {
         account.setLastName("cLastName");
         account.setPassword("cPassword");
         account.setAccountNumber("cNumber");
-        account.setAccountState(200.);
-        account.setDebt(500.);
+        account.setAccountState(BigDecimal.valueOf(200.));
+        account.setDebt(BigDecimal.valueOf(500.));
         account.setCurrency(Currency.EUR);
 
         AccountEnt accountEnt = AccountMapper.mapToAccountEnt(account);
@@ -59,8 +61,8 @@ class AccountMapperTest {
         accountEnt.setLastName("cLastName");
         accountEnt.setPassword("cPassword");
         accountEnt.setAccountNumber("cNumber");
-        accountEnt.setAccountState(200.);
-        accountEnt.setDebt(500.);
+        accountEnt.setAccountState(BigDecimal.valueOf(200.));
+        accountEnt.setDebt(BigDecimal.valueOf(500.));
         accountEnt.setCurrency(CurrencyEnt.EUR);
 
         Account account = AccountMapper.mapToAccount(accountEnt);
