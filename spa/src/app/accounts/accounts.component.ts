@@ -35,13 +35,13 @@ export class AccountsComponent implements OnInit {
 
     block(login: string): void {
         this.accountService.blockAccount(login).subscribe(
-            () => this.router.navigate([`/accounts`])
+            () => this.getAccounts()
         )
     }
 
     unblock(login: string): void {
         this.accountService.unblockAccount(login).subscribe(
-            () => this.router.navigate([`/accounts`])
+            () => this.getAccounts()
         )
     }
 }
