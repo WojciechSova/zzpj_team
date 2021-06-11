@@ -29,11 +29,19 @@ export class AccountsComponent implements OnInit {
         );
     }
 
-    remove(login: string) : void {
-
-    }
-
     edit(login: string): void {
         this.router.navigate([`/accounts/edit/${login}`]);
+    }
+
+    block(login: string): void {
+        this.accountService.blockAccount(login).subscribe(
+            () => this.router.navigate([`/accounts`])
+        )
+    }
+
+    unblock(login: string): void {
+        this.accountService.unblockAccount(login).subscribe(
+            () => this.router.navigate([`/accounts`])
+        )
     }
 }

@@ -38,7 +38,8 @@ export class EditUserComponent implements OnInit {
             firstName: '',
             id: '',
             lastName: '',
-            login: ''
+            login: '',
+            active: false
         }
         this.getAccount(this.login);
     }

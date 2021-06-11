@@ -27,4 +27,5 @@ public class AccountDto {
     private BigDecimal debt;
     private CurrencyDto currency;
     private AccessLevelDto accessLevel;
+    private Boolean active;
 }

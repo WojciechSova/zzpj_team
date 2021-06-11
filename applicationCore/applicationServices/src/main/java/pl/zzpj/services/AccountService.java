@@ -9,7 +9,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import pl.zzpj.controller.AccountCRUDUseCase;
 import pl.zzpj.controller.SignInUseCase;
+import pl.zzpj.infrastructure.AccessLevelCRUDPort;
 import pl.zzpj.infrastructure.AccountCRUDPort;
+import pl.zzpj.model.AccessLevel;
 import pl.zzpj.model.UserPrincipal;
 import pl.zzpj.model.Account;
 
@@ -20,10 +22,12 @@ import java.util.List;
 public class AccountService implements AccountCRUDUseCase, SignInUseCase {
 
     private final AccountCRUDPort accountCRUDPort;
+    private final AccessLevelCRUDPort accessLevelCRUDPort;
 
     @Autowired
-    public AccountService(AccountCRUDPort accountCRUDPort) {
+    public AccountService(AccountCRUDPort accountCRUDPort, AccessLevelCRUDPort accessLevelCRUDPort) {
         this.accountCRUDPort = accountCRUDPort;
+        this.accessLevelCRUDPort = accessLevelCRUDPort;
     }
 
     @Override
@@ -45,7 +49,30 @@ public class AccountService implements AccountCRUDUseCase, SignInUseCase {
 
     @Override
     public void updateAccount(String login, Account account) {
-        accountCRUDPort.updateAccount(login, account);
+        Account acc = accountCRUDPort.findByLogin(login);
+        AccessLevel accLvl = accessLevelCRUDPort.findByLevel(account.getAccessLevel().getLevel());
+        acc.setCurrency(account.getCurrency());
+        if (account.getPassword() != null && !account.getPassword().isBlank()) {
+            acc.setPassword(account.getPassword());
+        }
+        acc.setFirstName(account.getFirstName());
+        acc.setLastName(account.getLastName());
+        acc.setAccessLevel(accLvl);
+        accountCRUDPort.updateAccount(acc);
+    }
+
+    @Override
+    public void blockAccount(String login) {
+        Account account = accountCRUDPort.findByLogin(login);
+        account.setActive(false);
+        accountCRUDPort.updateAccount(account);
+    }
+
+    @Override
+    public void unblockAccount(String login) {
+        Account account = accountCRUDPort.findByLogin(login);
+        account.setActive(true);
+        accountCRUDPort.updateAccount(account);
     }
 
     @Override

@@ -12,6 +12,10 @@ public interface AccountCRUDUseCase {
 
     void updateAccount(String login, Account account);
 
+    void blockAccount(String login);
+
+    void unblockAccount(String login);
+
     Account findByLogin(String login);
 
     List<Account> findAll();

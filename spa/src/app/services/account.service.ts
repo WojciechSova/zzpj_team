@@ -38,4 +38,12 @@ export class AccountService {
     editAccount(login: string, account: Account) {
         return this.http.put(this.url + `/accounts/edit/${login}`,account);
     }
+
+    blockAccount(login: string) {
+        return this.http.put(this.url + `/accounts/block/${login}`, null);
+    }
+
+    unblockAccount(login: string) {
+        return this.http.put(this.url + `/accounts/unblock/${login}`, null);
+    }
 }

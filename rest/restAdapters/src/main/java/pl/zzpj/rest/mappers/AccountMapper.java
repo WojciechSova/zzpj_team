@@ -16,6 +16,7 @@ public class AccountMapper {
         accountDto.setId(account.getId());
         accountDto.setAccountNumber(account.getAccountNumber());
         accountDto.setAccountState(account.getAccountState());
+        accountDto.setActive(account.getActive());
         accountDto.setDebt(account.getDebt());
         if (account.getCurrency() != null) {
             accountDto.setCurrency(CurrencyMapper.mapToCurrencyDto(account.getCurrency()));
@@ -38,6 +39,7 @@ public class AccountMapper {
         account.setPassword(accountDto.getPassword());
         account.setAccountNumber(accountDto.getAccountNumber());
         account.setAccountState(accountDto.getAccountState());
+        account.setActive(accountDto.getActive());
         account.setDebt(accountDto.getDebt());
 
         if (accountDto.getCurrency() != null) {

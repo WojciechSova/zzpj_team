@@ -45,6 +45,7 @@ export class AddAccountComponent implements OnInit {
                 id: '0',
                 level: this.accessLevel,
             },
+            active: true,
         }).subscribe(() => {
             this.router.navigate(['/accounts'])
         })

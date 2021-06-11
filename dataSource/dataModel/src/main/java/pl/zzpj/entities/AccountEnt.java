@@ -28,4 +28,5 @@ public class AccountEnt {
     @ManyToOne
     @JoinColumn(name = "access_level", referencedColumnName = "id")
     private AccessLevelEnt accessLevel;
+    private Boolean active;
 }

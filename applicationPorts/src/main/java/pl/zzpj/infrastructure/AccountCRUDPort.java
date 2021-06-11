@@ -10,7 +10,7 @@ public interface AccountCRUDPort {
 
     void removeAccount(Account account);
 
-    void updateAccount(String login, Account account);
+    void updateAccount(Account account);
 
     Account findByLogin(String login);
 

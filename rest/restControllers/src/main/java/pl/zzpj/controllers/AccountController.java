@@ -38,6 +38,18 @@ public class AccountController {
     }
 
     @CrossOrigin
+    @PutMapping(path = "/block/{login}")
+    public void blockAccount(@PathVariable("login") String login) {
+        this.accountRestAdapter.blockAccount(login);
+    }
+
+    @CrossOrigin
+    @PutMapping(path = "/unblock/{login}")
+    public void unblockAccount(@PathVariable("login") String login) {
+        this.accountRestAdapter.unblockAccount(login);
+    }
+
+    @CrossOrigin
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void addAccount(@RequestBody AccountDto accountDto) {
         accountRestAdapter.addAccount(accountDto);

@@ -11,4 +11,5 @@ export interface Account {
     debt?: number,
     currency?: string,
     accessLevel: AccessLevel,
+    active: boolean,
 }

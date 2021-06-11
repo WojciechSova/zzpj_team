@@ -11,6 +11,7 @@ import pl.zzpj.model.AccessLevel;
 import pl.zzpj.model.Account;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class AccountRestAdapterTest {
@@ -38,5 +39,17 @@ class AccountRestAdapterTest {
         AccountDto accountDto = accountRestAdapter.findByLogin("login");
 
         assertEquals(account.getLogin(), accountDto.getLogin());
+    }
+
+    @Test
+    void blockAccount() {
+        accountRestAdapter.blockAccount("login0");
+        verify(accountCRUDUseCase).blockAccount("login0");
+    }
+
+    @Test
+    void unblockAccount() {
+        accountRestAdapter.unblockAccount("login0");
+        verify(accountCRUDUseCase).unblockAccount("login0");
     }
 }

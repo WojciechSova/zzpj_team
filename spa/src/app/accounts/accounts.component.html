@@ -13,7 +13,7 @@
             <td>Account state</td>
             <td>Debt</td>
             <td>Currency</td>
-            <td>Remove</td>
+            <td>Activity</td>
             <td>Edit</td>
         </tr>
         <tr *ngFor="let account of accounts">
@@ -26,8 +26,11 @@
             <td>{{account.debt}}</td>
             <td>{{account.currency}}</td>
             <td>
-                <button (click)="remove(account.login)">
-                    Remove
+                <button *ngIf="account.active" (click)="block(account.login)">
+                    Block
+                </button>
+                <button *ngIf="!account.active" (click)="unblock(account.login)">
+                    Unblock
                 </button>
             </td>
             <td>

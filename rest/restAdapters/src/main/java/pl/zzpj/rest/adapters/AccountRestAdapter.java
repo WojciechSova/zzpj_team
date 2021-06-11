@@ -33,4 +33,12 @@ public class AccountRestAdapter {
     public void editAccount(String login, AccountDto accountDto) {
         accountCRUDUseCase.updateAccount(login, AccountMapper.mapToAccount(accountDto));
     }
+
+    public void blockAccount(String login) {
+        accountCRUDUseCase.blockAccount(login);
+    }
+
+    public void unblockAccount(String login) {
+        accountCRUDUseCase.unblockAccount(login);
+    }
 }

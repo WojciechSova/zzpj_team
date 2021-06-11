@@ -19,4 +19,5 @@ public class Account {
     private BigDecimal debt;
     private Currency currency;
     private AccessLevel accessLevel;
+    private Boolean active;
 }

@@ -14,8 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class AccountControllerTest {
 
@@ -84,5 +83,17 @@ class AccountControllerTest {
         accountController.editAccount(login, accountDto);
 
         assertEquals(accountDto.getFirstName(), accountDto2.getFirstName());
+    }
+
+    @Test
+    void blockAccount() {
+        accountController.blockAccount("login");
+        verify(accountRestAdapter).blockAccount("login");
+    }
+
+    @Test
+    void unblockAccount() {
+        accountController.unblockAccount("login");
+        verify(accountRestAdapter).unblockAccount("login");
     }
 }

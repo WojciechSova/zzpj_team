@@ -30,6 +30,7 @@ class AccountMapperTest {
         account.setAccountState(BigDecimal.valueOf(200.));
         account.setDebt(BigDecimal.valueOf(500.));
         account.setCurrency(Currency.EUR);
+        account.setActive(true);
 
         AccountDto accountDto = AccountMapper.mapToAccountDto(account);
 
@@ -42,9 +43,10 @@ class AccountMapperTest {
         assertEquals("cLastName", accountDto.getLastName());
         assertEquals("cPassword", accountDto.getPassword());
         assertEquals("cNumber", accountDto.getAccountNumber());
-        assertEquals(200, accountDto.getAccountState());
-        assertEquals(500, accountDto.getDebt());
+        assertEquals(BigDecimal.valueOf(200.), accountDto.getAccountState());
+        assertEquals(BigDecimal.valueOf(500.), accountDto.getDebt());
         assertEquals(CurrencyDto.EUR, accountDto.getCurrency());
+        assertTrue(accountDto.getActive());
     }
 
     @Test
@@ -64,6 +66,7 @@ class AccountMapperTest {
         accountDto.setAccountState(BigDecimal.valueOf(200.));
         accountDto.setDebt(BigDecimal.valueOf(500.));
         accountDto.setCurrency(CurrencyDto.EUR);
+        accountDto.setActive(true);
 
         Account account = AccountMapper.mapToAccount(accountDto);
 
@@ -75,8 +78,9 @@ class AccountMapperTest {
         assertEquals("cLastName", account.getLastName());
         assertEquals("cPassword", account.getPassword());
         assertEquals("cNumber", account.getAccountNumber());
-        assertEquals(200, account.getAccountState());
-        assertEquals(500, account.getDebt());
+        assertEquals(BigDecimal.valueOf(200.), account.getAccountState());
+        assertEquals(BigDecimal.valueOf(500.), account.getDebt());
         assertEquals(Currency.EUR, account.getCurrency());
+        assertTrue(account.getActive());
     }
 }

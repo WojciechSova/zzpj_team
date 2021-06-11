@@ -8,24 +8,23 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import pl.zzpj.infrastructure.AccessLevelCRUDPort;
 import pl.zzpj.infrastructure.AccountCRUDPort;
-import pl.zzpj.model.Account;
-import pl.zzpj.model.Currency;
-import pl.zzpj.model.UserCredentials;
-import pl.zzpj.model.UserPrincipal;
+import pl.zzpj.model.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class AccountServiceTest {
 
     @Mock
     AccountCRUDPort accountCRUDPort;
+    @Mock
+    AccessLevelCRUDPort accessLevelCRUDPort;
     @InjectMocks
     AccountService accountService;
 
@@ -84,24 +83,33 @@ class AccountServiceTest {
 
     @Test
     void updateAccount() {
-        when(account3.getFirstName()).thenReturn(firstName3);
-        when(account3.getLastName()).thenReturn(lastName3);
-        when(account3.getCurrency()).thenReturn(currency3);
+        account1.setCurrency(Currency.EUR);
+        account1.setPassword("pw");
+        account1.setFirstName("fn");
+        account1.setLastName("ln");
+        account1.setAccessLevel(null);
 
-        doAnswer(invocationOnMock -> {
-            account1.setFirstName(account3.getFirstName());
-            account1.setLastName(account3.getLastName());
-            account1.setCurrency(account3.getCurrency());
-            return null;
-        }).when(accountCRUDPort).updateAccount(login1, account3);
+        account2.setCurrency(Currency.GBP);
+        account2.setPassword("pw1");
+        account2.setFirstName("fn1");
+        account2.setLastName("ln1");
+        AccessLevel accessLevel = new AccessLevel();
+        accessLevel.setId(2L);
+        accessLevel.setLevel("CLIENT");
+        account2.setAccessLevel(accessLevel);
 
-        accountService.updateAccount(login1, account3);
+        when(accountCRUDPort.findByLogin(login1)).thenReturn(account1);
+        when(accessLevelCRUDPort.findByLevel("CLIENT")).thenReturn(accessLevel);
 
-        assertAll(
-                () -> assertEquals(firstName3, account1.getFirstName()),
-                () -> assertEquals(lastName3, account1.getLastName()),
-                () -> assertEquals(currency3, account1.getCurrency())
-        );
+        accountService.updateAccount(login1, account2);
+
+        assertEquals(account2.getCurrency(), account1.getCurrency());
+        assertEquals(account2.getPassword(), account1.getPassword());
+        assertEquals(account2.getFirstName(), account1.getFirstName());
+        assertEquals(account2.getLastName(), account1.getLastName());
+        assertEquals(account2.getAccessLevel(), account1.getAccessLevel());
+
+        verify(accountCRUDPort).updateAccount(account1);
     }
 
     @Test
@@ -141,5 +149,25 @@ class AccountServiceTest {
 
         assertEquals(new UserPrincipal(account1).getUsername(), userDetails.getUsername());
         assertEquals(new UserPrincipal(account1).getPassword(), userDetails.getPassword());
+    }
+
+    @Test
+    void blockAccount() {
+        when(accountCRUDPort.findByLogin(login1)).thenReturn(account1);
+        account1.setActive(true);
+        accountService.blockAccount(login1);
+
+        assertFalse(account1.getActive());
+        verify(accountCRUDPort).updateAccount(account1);
+    }
+
+    @Test
+    void unblockAccount() {
+        when(accountCRUDPort.findByLogin(login1)).thenReturn(account1);
+        account1.setActive(false);
+        accountService.unblockAccount(login1);
+
+        assertTrue(account1.getActive());
+        verify(accountCRUDPort).updateAccount(account1);
     }
 }
