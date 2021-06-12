@@ -11,7 +11,9 @@ public class TransactionMapper {
         transactionDto.setDate(transaction.getDate());
         transactionDto.setAmount(transaction.getAmount());
         transactionDto.setFrom(AccountMapper.mapToAccountDto(transaction.getFrom()));
+        transactionDto.setFromCurrency(CurrencyMapper.mapToCurrencyDto(transaction.getFromCurrency()));
         transactionDto.setTo(AccountMapper.mapToAccountDto(transaction.getTo()));
+        transactionDto.setToCurrency(CurrencyMapper.mapToCurrencyDto(transaction.getToCurrency()));
         transactionDto.setRate(transaction.getRate());
 
         return transactionDto;
@@ -23,7 +25,9 @@ public class TransactionMapper {
         transaction.setDate(transactionDto.getDate());
         transaction.setAmount(transactionDto.getAmount());
         transaction.setFrom(AccountMapper.mapToAccount(transactionDto.getFrom()));
+        transaction.setFromCurrency(CurrencyMapper.mapToCurrency(transactionDto.getFromCurrency()));
         transaction.setTo(AccountMapper.mapToAccount(transactionDto.getTo()));
+        transaction.setToCurrency(CurrencyMapper.mapToCurrency(transactionDto.getToCurrency()));
         transaction.setRate(transactionDto.getRate());
 
         return transaction;

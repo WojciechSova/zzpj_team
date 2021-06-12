@@ -13,8 +13,10 @@ import java.sql.Timestamp;
 public class TransactionDto {
 
     private AccountDto from;
+    private CurrencyDto fromCurrency;
     private AccountDto to;
-    private double amount;
+    private CurrencyDto toCurrency;
+    private BigDecimal amount;
     private Timestamp date;
     private BigDecimal rate;
 }

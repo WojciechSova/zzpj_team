@@ -42,8 +42,8 @@ class AccountMapperTest {
         assertEquals("cLastName", accountEnt.getLastName());
         assertEquals("cPassword", accountEnt.getPassword());
         assertEquals("cNumber", accountEnt.getAccountNumber());
-        assertEquals(200, accountEnt.getAccountState());
-        assertEquals(500, accountEnt.getDebt());
+        assertEquals(BigDecimal.valueOf(200.), accountEnt.getAccountState());
+        assertEquals(BigDecimal.valueOf(500.), accountEnt.getDebt());
         assertEquals(CurrencyEnt.EUR, accountEnt.getCurrency());
     }
 
@@ -75,8 +75,8 @@ class AccountMapperTest {
         assertEquals("cLastName", account.getLastName());
         assertEquals("cPassword", account.getPassword());
         assertEquals("cNumber", account.getAccountNumber());
-        assertEquals(200, account.getAccountState());
-        assertEquals(500, account.getDebt());
+        assertEquals(BigDecimal.valueOf(200.), account.getAccountState());
+        assertEquals(BigDecimal.valueOf(500.), account.getDebt());
         assertEquals(Currency.EUR, account.getCurrency());
     }
 }

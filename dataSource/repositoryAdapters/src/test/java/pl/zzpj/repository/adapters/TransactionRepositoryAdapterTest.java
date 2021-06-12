@@ -10,6 +10,7 @@ import pl.zzpj.model.AccessLevel;
 import pl.zzpj.model.Account;
 import pl.zzpj.model.Currency;
 import pl.zzpj.repositories.AccountRepository;
+import pl.zzpj.repositories.TransactionRepository;
 import pl.zzpj.repository.mappers.AccountMapper;
 
 import java.math.BigDecimal;
@@ -23,6 +24,9 @@ class TransactionRepositoryAdapterTest {
 
     @Mock
     private AccountRepository accountRepository;
+
+    @Mock
+    private TransactionRepository transactionRepository;
 
     @InjectMocks
     TransactionRepositoryAdapter transactionRepositoryAdapter;
@@ -58,7 +62,7 @@ class TransactionRepositoryAdapterTest {
         }).when(accountRepository).save(any());
         transactionRepositoryAdapter.withdraw(from, BigDecimal.valueOf(2000));
 
-        assertEquals(7999, from.getAccountState());
+        assertEquals(BigDecimal.valueOf(7999.), from.getAccountState());
     }
 
     @Test
@@ -74,7 +78,7 @@ class TransactionRepositoryAdapterTest {
         }).when(accountRepository).save(any());
         transactionRepositoryAdapter.deposit(from, BigDecimal.valueOf(2000));
 
-        assertEquals(11_999, from.getAccountState());
+        assertEquals(BigDecimal.valueOf(11_999.), from.getAccountState());
     }
 
     @Test
@@ -86,7 +90,7 @@ class TransactionRepositoryAdapterTest {
         }).when(accountRepository).saveAll(any());
         transactionRepositoryAdapter.transfer(from, to, BigDecimal.valueOf(2000), BigDecimal.valueOf(1.5));
 
-        assertEquals(6999, from.getAccountState());
-        assertEquals(3111, to.getAccountState());
+        assertEquals(BigDecimal.valueOf(6999.), from.getAccountState());
+        assertEquals(BigDecimal.valueOf(3111.), to.getAccountState());
     }
 }

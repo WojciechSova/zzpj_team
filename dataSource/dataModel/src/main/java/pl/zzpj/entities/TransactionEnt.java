@@ -21,9 +21,13 @@ public class TransactionEnt {
     @ManyToOne
     private AccountEnt from;
 
+    private CurrencyEnt fromCurrency;
+
     @ManyToOne
     private AccountEnt to;
-    private double amount;
+
+    private CurrencyEnt toCurrency;
+    private BigDecimal amount;
     private Timestamp date;
     private BigDecimal rate;
 }

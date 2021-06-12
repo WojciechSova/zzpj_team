@@ -10,6 +10,7 @@ import pl.zzpj.dto.AccountDto;
 import pl.zzpj.dto.CurrencyDto;
 import pl.zzpj.dto.TransactionDto;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.Instant;
 
@@ -32,17 +33,21 @@ class TransactionMapperTest {
         Timestamp timestamp = Timestamp.from(Instant.now());
 
         Transaction transaction = new Transaction();
-        transaction.setAmount(100);
+        transaction.setAmount(BigDecimal.valueOf(100));
         transaction.setDate(timestamp);
         transaction.setFrom(from);
+        transaction.setFromCurrency(from.getCurrency());
         transaction.setTo(to);
+        transaction.setToCurrency(to.getCurrency());
 
         TransactionDto transactionDto = TransactionMapper.mapToTransactionDto(transaction);
 
-        assertEquals(100, transactionDto.getAmount());
+        assertEquals(BigDecimal.valueOf(100), transactionDto.getAmount());
         assertEquals(timestamp, transactionDto.getDate());
         assertEquals(from.getLogin(), transactionDto.getFrom().getLogin());
+        assertEquals(from.getCurrency(), CurrencyMapper.mapToCurrency(transactionDto.getFromCurrency()));
         assertEquals(to.getLogin(), transactionDto.getTo().getLogin());
+        assertEquals(to.getCurrency(), CurrencyMapper.mapToCurrency(transactionDto.getToCurrency()));
     }
 
     @Test
@@ -60,16 +65,20 @@ class TransactionMapperTest {
         Timestamp timestamp = Timestamp.from(Instant.now());
 
         TransactionDto transactionDto = new TransactionDto();
-        transactionDto.setAmount(100);
+        transactionDto.setAmount(BigDecimal.valueOf(100));
         transactionDto.setDate(timestamp);
         transactionDto.setFrom(from);
+        transactionDto.setFromCurrency(from.getCurrency());
         transactionDto.setTo(to);
+        transactionDto.setToCurrency(to.getCurrency());
 
         Transaction transaction = TransactionMapper.mapToTransaction(transactionDto);
 
-        assertEquals(100, transaction.getAmount());
+        assertEquals(BigDecimal.valueOf(100), transaction.getAmount());
         assertEquals(timestamp, transaction.getDate());
         assertEquals(from.getLogin(), transaction.getFrom().getLogin());
+        assertEquals(from.getCurrency(), CurrencyMapper.mapToCurrencyDto(transaction.getFromCurrency()));
         assertEquals(to.getLogin(), transaction.getTo().getLogin());
+        assertEquals(to.getCurrency(), CurrencyMapper.mapToCurrencyDto(transaction.getToCurrency()));
     }
 }
