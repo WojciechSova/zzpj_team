@@ -5,8 +5,10 @@ import org.springframework.stereotype.Service;
 import pl.zzpj.controller.TransactionUseCase;
 import pl.zzpj.infrastructure.TransactionPort;
 import pl.zzpj.model.Account;
+import pl.zzpj.model.Transaction;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class TransactionService implements TransactionUseCase {
@@ -31,5 +33,10 @@ public class TransactionService implements TransactionUseCase {
     @Override
     public void transfer(Account from, Account to, BigDecimal amount, BigDecimal rate) throws Exception {
         transactionPort.transfer(from, to, amount, CurrencyExchangeService.exchangeFromTo(from.getCurrency(), to.getCurrency()));
+    }
+
+    @Override
+    public List<Transaction> findAll() {
+        return transactionPort.findAll();
     }
 }

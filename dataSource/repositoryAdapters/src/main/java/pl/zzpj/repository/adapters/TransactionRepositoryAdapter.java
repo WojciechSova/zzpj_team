@@ -6,13 +6,16 @@ import pl.zzpj.entities.AccountEnt;
 import pl.zzpj.entities.TransactionEnt;
 import pl.zzpj.infrastructure.TransactionPort;
 import pl.zzpj.model.Account;
+import pl.zzpj.model.Transaction;
 import pl.zzpj.repositories.AccountRepository;
 import pl.zzpj.repositories.TransactionRepository;
+import pl.zzpj.repository.mappers.TransactionMapper;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class TransactionRepositoryAdapter implements TransactionPort {
@@ -36,9 +39,9 @@ public class TransactionRepositoryAdapter implements TransactionPort {
             accountRepository.save(acc);
 
             TransactionEnt transactionEnt = new TransactionEnt();
-            transactionEnt.setFrom(acc);
+            transactionEnt.setFromId(acc);
             transactionEnt.setFromCurrency(acc.getCurrency());
-            transactionEnt.setTo(acc);
+            transactionEnt.setToId(acc);
             transactionEnt.setToCurrency(acc.getCurrency());
             transactionEnt.setAmount(amount.multiply(new BigDecimal(-1)));
             transactionEnt.setRate(new BigDecimal(1));
@@ -58,9 +61,9 @@ public class TransactionRepositoryAdapter implements TransactionPort {
         accountRepository.save(acc);
 
         TransactionEnt transactionEnt = new TransactionEnt();
-        transactionEnt.setFrom(acc);
+        transactionEnt.setFromId(acc);
         transactionEnt.setFromCurrency(acc.getCurrency());
-        transactionEnt.setTo(acc);
+        transactionEnt.setToId(acc);
         transactionEnt.setToCurrency(acc.getCurrency());
         transactionEnt.setAmount(amount);
         transactionEnt.setRate(new BigDecimal(1));
@@ -80,9 +83,9 @@ public class TransactionRepositoryAdapter implements TransactionPort {
             accountRepository.saveAll(List.of(accFrom, accTo));
 
             TransactionEnt transactionEnt = new TransactionEnt();
-            transactionEnt.setFrom(accFrom);
+            transactionEnt.setFromId(accFrom);
             transactionEnt.setFromCurrency(accFrom.getCurrency());
-            transactionEnt.setTo(accTo);
+            transactionEnt.setToId(accTo);
             transactionEnt.setToCurrency(accTo.getCurrency());
             transactionEnt.setAmount(amount);
             transactionEnt.setRate(rate);
@@ -92,5 +95,11 @@ public class TransactionRepositoryAdapter implements TransactionPort {
         else {
             throw new IllegalStateException("Not enough money");
         }
+    }
+
+    @Override
+    public List<Transaction> findAll() {
+        return transactionRepository.findAll().stream().map(TransactionMapper::mapToTransaction)
+                .collect(Collectors.toList());
     }
 }

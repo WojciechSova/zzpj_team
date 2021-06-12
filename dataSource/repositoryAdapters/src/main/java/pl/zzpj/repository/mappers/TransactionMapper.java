@@ -12,8 +12,10 @@ public class TransactionMapper {
 
         transactionEnt.setDate(transaction.getDate());
         transactionEnt.setAmount(transaction.getAmount());
-        transactionEnt.setFrom((AccountEnt) AccountMapper.mapToAccountEnt(transaction.getFrom()));
-        transactionEnt.setTo((AccountEnt) AccountMapper.mapToAccountEnt(transaction.getTo()));
+        transactionEnt.setFromId((AccountEnt) AccountMapper.mapToAccountEnt(transaction.getFrom()));
+        transactionEnt.setFromCurrency(CurrencyMapper.mapToCurrencyEnt(transaction.getFromCurrency()));
+        transactionEnt.setToId((AccountEnt) AccountMapper.mapToAccountEnt(transaction.getTo()));
+        transactionEnt.setToCurrency(CurrencyMapper.mapToCurrencyEnt(transaction.getToCurrency()));
         transactionEnt.setRate(transaction.getRate());
 
         return transactionEnt;
@@ -24,8 +26,10 @@ public class TransactionMapper {
 
         transaction.setDate(transactionEnt.getDate());
         transaction.setAmount(transactionEnt.getAmount());
-        transaction.setFrom(AccountMapper.mapToAccount(transactionEnt.getFrom()));
-        transaction.setTo(AccountMapper.mapToAccount(transactionEnt.getTo()));
+        transaction.setFrom(AccountMapper.mapToAccount(transactionEnt.getFromId()));
+        transaction.setFromCurrency(CurrencyMapper.mapToCurrency(transactionEnt.getFromCurrency()));
+        transaction.setTo(AccountMapper.mapToAccount(transactionEnt.getToId()));
+        transaction.setToCurrency(CurrencyMapper.mapToCurrency(transactionEnt.getToCurrency()));
         transaction.setRate(transactionEnt.getRate());
 
         return transaction;

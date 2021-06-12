@@ -42,8 +42,8 @@ class TransactionMapperTest {
 
         assertEquals(BigDecimal.valueOf(100), transactionEnt.getAmount());
         assertEquals(timestamp, transactionEnt.getDate());
-        assertEquals(from.getLogin(), transactionEnt.getFrom().getLogin());
-        assertEquals(to.getLogin(), transactionEnt.getTo().getLogin());
+        assertEquals(from.getLogin(), transactionEnt.getFromId().getLogin());
+        assertEquals(to.getLogin(), transactionEnt.getToId().getLogin());
     }
 
     @Test
@@ -63,8 +63,8 @@ class TransactionMapperTest {
         TransactionEnt transactionEnt = new TransactionEnt();
         transactionEnt.setAmount(BigDecimal.valueOf(100));
         transactionEnt.setDate(timestamp);
-        transactionEnt.setFrom(from);
-        transactionEnt.setTo(to);
+        transactionEnt.setFromId(from);
+        transactionEnt.setToId(to);
 
         Transaction transaction = TransactionMapper.mapToTransaction(transactionEnt);
 

@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 @Controller
 public class AccountRestAdapter {
+
     private final AccountCRUDUseCase accountCRUDUseCase;
 
     @Autowired

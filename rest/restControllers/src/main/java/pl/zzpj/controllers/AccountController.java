@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/accounts")
 public class AccountController {
 
-    final AccountRestAdapter accountRestAdapter;
+    private final AccountRestAdapter accountRestAdapter;
 
     @Autowired
     public AccountController(AccountRestAdapter accountRestAdapter) {
