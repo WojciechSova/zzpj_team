@@ -1,0 +1,25 @@
+<div class="flex-item">
+    <div class="links">
+        <a routerLink="/main">Main page</a>
+    </div>
+    <table class="rtable">
+        <tr>
+            <td>From</td>
+            <td>From currency</td>
+            <td>To</td>
+            <td>To currency</td>
+            <td>Amount</td>
+            <td>Rate</td>
+            <td>Date</td>
+        </tr>
+        <tr *ngFor="let transaction of transactions">
+            <td>{{transaction.from.login}}</td>
+            <td>{{transaction.fromCurrency}}</td>
+            <td>{{transaction.to.login}}</td>
+            <td>{{transaction.toCurrency}}</td>
+            <td>{{transaction.amount}}</td>
+            <td>{{transaction.rate}}</td>
+            <td>{{transaction.date}}</td>
+        </tr>
+    </table>
+</div>

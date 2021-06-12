@@ -11,6 +11,7 @@ import { MainComponent } from './main/main.component';
 import { AccountsComponent } from './accounts/accounts.component';
 import { AddAccountComponent } from './add-account/add-account.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
+import { TransactionsComponent } from './transactions/transactions.component';
 
 export const httpInterceptorProviders = [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
@@ -23,7 +24,8 @@ export const httpInterceptorProviders = [
         MainComponent,
         AccountsComponent,
         AddAccountComponent,
-        EditUserComponent
+        EditUserComponent,
+        TransactionsComponent
     ],
     imports: [
         BrowserModule,
