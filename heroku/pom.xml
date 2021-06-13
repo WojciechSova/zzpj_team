@@ -47,7 +47,7 @@
             </goals>
             <phase>generate-resources</phase>
             <configuration>
-              <arguments>run build</arguments>
+              <arguments>run heroku-postbuild</arguments>
             </configuration>
           </execution>
         </executions>
