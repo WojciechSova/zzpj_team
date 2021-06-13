@@ -66,7 +66,14 @@ public class TransactionServiceTest {
 
         assertEquals(BigDecimal.valueOf(7999.), from.getAccountState());
         verify(transactionPort).addTransaction(transactionCaptor.capture());
+
         Transaction transaction = transactionCaptor.getValue();
+        assertEquals(transaction.getFrom(), from);
+        assertEquals(transaction.getFromCurrency(), from.getCurrency());
+        assertEquals(transaction.getTo(), from);
+        assertEquals(transaction.getToCurrency(), from.getCurrency());
+        assertEquals(transaction.getAmount(), BigDecimal.valueOf(-2000));
+        assertEquals(transaction.getRate(), BigDecimal.valueOf(1));
     }
 
     @Test
@@ -81,7 +88,14 @@ public class TransactionServiceTest {
         assertEquals(BigDecimal.valueOf(11_999.), from.getAccountState());
         verify(accountCRUDPort).updateAccount(from);
         verify(transactionPort).addTransaction(transactionCaptor.capture());
+
         Transaction transaction = transactionCaptor.getValue();
+        assertEquals(transaction.getFrom(), from);
+        assertEquals(transaction.getFromCurrency(), from.getCurrency());
+        assertEquals(transaction.getTo(), from);
+        assertEquals(transaction.getToCurrency(), from.getCurrency());
+        assertEquals(transaction.getAmount(), BigDecimal.valueOf(2000));
+        assertEquals(transaction.getRate(), BigDecimal.valueOf(1));
     }
 
     @Test
@@ -94,6 +108,13 @@ public class TransactionServiceTest {
         verify(accountCRUDPort).updateAccount(from);
         verify(accountCRUDPort).updateAccount(to);
         verify(transactionPort).addTransaction(transactionCaptor.capture());
+
         Transaction transaction = transactionCaptor.getValue();
+        assertEquals(transaction.getFrom(), from);
+        assertEquals(transaction.getFromCurrency(), from.getCurrency());
+        assertEquals(transaction.getTo(), to);
+        assertEquals(transaction.getToCurrency(), to.getCurrency());
+        assertEquals(transaction.getAmount(), BigDecimal.valueOf(2000));
+        assertEquals(transaction.getRate(), BigDecimal.valueOf(1.5));
     }
 }
