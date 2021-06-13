@@ -24,6 +24,13 @@ export class AccountService {
         });
     }
 
+    getOwnAccount(): any {
+        return this.http.get(this.url + '/accounts/own',{
+            observe: 'body',
+            responseType: 'json'
+        });
+    }
+
     addAccounts(acc: Account): any {
         return this.http.post(this.url + '/accounts/add', acc);
     }

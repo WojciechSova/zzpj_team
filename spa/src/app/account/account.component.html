@@ -1,0 +1,27 @@
+<div class="flex-item">
+    <div class="links">
+        <a routerLink="/main">Main page</a>
+    </div>
+    <table class="rtable">
+        <tr>
+            <td>Login</td>
+            <td>First name</td>
+            <td>Last name</td>
+            <td>Access level</td>
+            <td>Account number</td>
+            <td>Account state</td>
+            <td>Debt</td>
+            <td>Currency</td>
+        </tr>
+        <tr>
+            <td>{{account.login}}</td>
+            <td>{{account.firstName}}</td>
+            <td>{{account.lastName}}</td>
+            <td>{{account.accessLevel.level}}</td>
+            <td>{{account.accountNumber}}</td>
+            <td>{{account.accountState}}</td>
+            <td>{{account.debt}}</td>
+            <td>{{account.currency}}</td>
+        </tr>
+    </table>
+</div>
