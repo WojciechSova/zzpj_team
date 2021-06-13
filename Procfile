@@ -1,1 +1,1 @@
-web: java -jar rest/restControllers/target/restControllers-0.1-SNAPSHOT.jar
+web: java -classpath "web/target/web-0.1-SNAPSHOT/WEB-INF/classes/*:classes/." pl.zzpj.App
