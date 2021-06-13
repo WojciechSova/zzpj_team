@@ -10,6 +10,7 @@
         <module>rest</module>
         <module>applicationPorts</module>
         <module>web</module>
+        <module>heroku</module>
     </modules>
 
     <parent>
