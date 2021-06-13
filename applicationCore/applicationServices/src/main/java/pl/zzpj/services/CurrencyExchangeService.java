@@ -2,6 +2,8 @@ package pl.zzpj.services;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+import pl.zzpj.exceptions.RequestFailedException;
 import pl.zzpj.model.Currency;
 
 import java.math.BigDecimal;
@@ -10,7 +12,7 @@ public class CurrencyExchangeService {
 
     private static final int STATUS_OK = 200;
 
-    public static BigDecimal exchangeFromTo(Currency fromCurrencyIsoCode, Currency toCurrencyIsoCode) throws Exception {
+    public static BigDecimal exchangeFromTo(Currency fromCurrencyIsoCode, Currency toCurrencyIsoCode) throws RequestFailedException, UnirestException {
         String url = "https://currency-exchange.p.rapidapi.com/exchange?to=" + toCurrencyIsoCode + "&from=" + fromCurrencyIsoCode;
 
         HttpResponse<String> response = Unirest.get(url)

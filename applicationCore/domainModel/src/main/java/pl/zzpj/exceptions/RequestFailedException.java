@@ -1,4 +1,4 @@
-package pl.zzpj.services;
+package pl.zzpj.exceptions;
 
 public class RequestFailedException extends Exception {
 
