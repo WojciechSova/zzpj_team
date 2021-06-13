@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
+import pl.zzpj.exceptions.LoanNotAvailableException;
 import pl.zzpj.infrastructure.AccountCRUDPort;
 import pl.zzpj.infrastructure.TransactionPort;
 import pl.zzpj.model.AccessLevel;
@@ -58,6 +59,14 @@ public class TransactionServiceTest {
 
         when(accountCRUDPort.findByLogin(from.getLogin())).thenReturn(from);
         when(accountCRUDPort.findByLogin(to.getLogin())).thenReturn(to);
+
+        account.setCurrency(Currency.EUR);
+        account.setPassword("pw");
+        account.setFirstName("fn");
+        account.setLastName("ln");
+        account.setAccessLevel(null);
+        account.setAccountState(BigDecimal.ZERO);
+        account.setDebt(BigDecimal.ZERO);
     }
 
     @Test
@@ -116,5 +125,22 @@ public class TransactionServiceTest {
         assertEquals(transaction.getToCurrency(), to.getCurrency());
         assertEquals(transaction.getAmount(), BigDecimal.valueOf(2000));
         assertEquals(transaction.getRate(), BigDecimal.valueOf(1.5));
+    }
+
+    Account account = new Account();
+
+    @Test
+    void takeLoan() {
+        when(accountCRUDPort.findByLogin("fn")).thenReturn(account);
+
+        try {
+            transactionService.takeLoan("fn", BigDecimal.ONE);
+        } catch (LoanNotAvailableException e) {
+            e.printStackTrace();
+        }
+
+        assertEquals(BigDecimal.ONE, account.getAccountState());
+        assertEquals(BigDecimal.valueOf(1.1), account.getDebt());
+        // Tutaj sprawdzanie transakcji czy się dodała
     }
 }
