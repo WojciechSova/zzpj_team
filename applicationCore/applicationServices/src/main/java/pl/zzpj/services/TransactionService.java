@@ -1,12 +1,9 @@
 package pl.zzpj.services;
 
-import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.zzpj.controller.TransactionUseCase;
-
 import pl.zzpj.exceptions.LoanNotAvailableException;
-import pl.zzpj.exceptions.RequestFailedException;
 import pl.zzpj.infrastructure.AccountCRUDPort;
 import pl.zzpj.infrastructure.TransactionPort;
 import pl.zzpj.model.Account;
@@ -20,30 +17,84 @@ import java.util.List;
 @Service
 public class TransactionService implements TransactionUseCase {
 
+    private final AccountCRUDPort accountCRUDPort;
+
     private final BigDecimal interest = BigDecimal.valueOf(1.1);
 
     private final TransactionPort transactionPort;
-    private final AccountCRUDPort accountCRUDPort;
 
     @Autowired
-    public TransactionService(TransactionPort transactionPort, AccountCRUDPort accountCRUDPort) {
-        this.transactionPort = transactionPort;
+    public TransactionService(AccountCRUDPort accountCRUDPort, TransactionPort transactionPort) {
         this.accountCRUDPort = accountCRUDPort;
+        this.transactionPort = transactionPort;
     }
 
     @Override
     public void withdraw(Account account, BigDecimal amount) {
-        transactionPort.withdraw(account, amount);
+        Account acc = accountCRUDPort.findByLogin(account.getLogin());
+        BigDecimal accountState = acc.getAccountState();
+        if (accountState.subtract(amount).doubleValue() >= 0) {
+            acc.setAccountState(accountState.subtract(amount));
+            accountCRUDPort.updateAccount(acc);
+
+            Transaction transaction = new Transaction();
+            transaction.setFrom(acc);
+            transaction.setFromCurrency(acc.getCurrency());
+            transaction.setTo(acc);
+            transaction.setToCurrency(acc.getCurrency());
+            transaction.setAmount(amount.multiply(new BigDecimal(-1)));
+            transaction.setRate(new BigDecimal(1));
+            transaction.setDate(Timestamp.from(Instant.now()));
+            transactionPort.addTransaction(transaction);
+        }
+        else {
+            throw new IllegalStateException("Not enough money");
+        }
     }
 
     @Override
     public void deposit(Account account, BigDecimal amount) {
-        transactionPort.deposit(account, amount);
+        Account acc = accountCRUDPort.findByLogin(account.getLogin());
+        BigDecimal accountState = acc.getAccountState();
+        acc.setAccountState(accountState.add(amount));
+        accountCRUDPort.updateAccount(acc);
+
+        Transaction transaction = new Transaction();
+        transaction.setFrom(acc);
+        transaction.setFromCurrency(acc.getCurrency());
+        transaction.setTo(acc);
+        transaction.setToCurrency(acc.getCurrency());
+        transaction.setAmount(amount);
+        transaction.setRate(new BigDecimal(1));
+        transaction.setDate(Timestamp.from(Instant.now()));
+        transactionPort.addTransaction(transaction);
     }
 
     @Override
-    public void transfer(Account from, Account to, BigDecimal amount, BigDecimal rate) throws Exception {
-        transactionPort.transfer(from, to, amount, CurrencyExchangeService.exchangeFromTo(from.getCurrency(), to.getCurrency()));
+    public void transfer(Account from, Account to, BigDecimal amount, BigDecimal rate) {
+        Account accFrom = accountCRUDPort.findByLogin(from.getLogin());
+        Account accTo = accountCRUDPort.findByLogin(to.getLogin());
+        BigDecimal accountState = accFrom.getAccountState();
+        if (accountState.subtract(amount).doubleValue() >= 0) {
+            BigDecimal convertedAmount = amount.multiply(BigDecimal.valueOf(rate.doubleValue()));
+            accFrom.setAccountState(accFrom.getAccountState().subtract(convertedAmount));
+            accTo.setAccountState(accTo.getAccountState().add(convertedAmount));
+            accountCRUDPort.updateAccount(accFrom);
+            accountCRUDPort.updateAccount(accTo);
+
+            Transaction transaction = new Transaction();
+            transaction.setFrom(accFrom);
+            transaction.setFromCurrency(accFrom.getCurrency());
+            transaction.setTo(accTo);
+            transaction.setToCurrency(accTo.getCurrency());
+            transaction.setAmount(amount);
+            transaction.setRate(rate);
+            transaction.setDate(Timestamp.from(Instant.now()));
+            transactionPort.addTransaction(transaction);
+        }
+        else {
+            throw new IllegalStateException("Not enough money");
+        }
     }
 
     @Override
