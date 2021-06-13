@@ -11,6 +11,7 @@
             <td>Amount</td>
             <td>Rate</td>
             <td>Date</td>
+            <td>Loan</td>
         </tr>
         <tr *ngFor="let transaction of transactions">
             <td>{{transaction.from.login}}</td>
@@ -20,6 +21,7 @@
             <td>{{transaction.amount}}</td>
             <td>{{transaction.rate}}</td>
             <td>{{transaction.date}}</td>
+            <td>{{transaction.isLoan ? 'Yes' : 'No'}}</td>
         </tr>
     </table>
 </div>
