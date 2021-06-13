@@ -39,4 +39,8 @@ public class TransactionService implements TransactionUseCase {
     public List<Transaction> findAll() {
         return transactionPort.findAll();
     }
+
+    private BigDecimal getMaxLoanAmount(Account account) {
+        return BigDecimal.valueOf(2000L);
+    }
 }
