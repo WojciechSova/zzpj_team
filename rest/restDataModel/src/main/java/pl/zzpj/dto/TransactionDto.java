@@ -19,4 +19,5 @@ public class TransactionDto {
     private BigDecimal amount;
     private Timestamp date;
     private BigDecimal rate;
+    private Boolean isLoan;
 }

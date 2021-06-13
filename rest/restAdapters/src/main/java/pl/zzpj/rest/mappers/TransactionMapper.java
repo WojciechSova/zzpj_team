@@ -15,6 +15,7 @@ public class TransactionMapper {
         transactionDto.setTo(AccountMapper.mapToAccountDto(transaction.getTo()));
         transactionDto.setToCurrency(CurrencyMapper.mapToCurrencyDto(transaction.getToCurrency()));
         transactionDto.setRate(transaction.getRate());
+        transactionDto.setIsLoan(transaction.getIsLoan());
 
         return transactionDto;
     }
@@ -29,6 +30,7 @@ public class TransactionMapper {
         transaction.setTo(AccountMapper.mapToAccount(transactionDto.getTo()));
         transaction.setToCurrency(CurrencyMapper.mapToCurrency(transactionDto.getToCurrency()));
         transaction.setRate(transactionDto.getRate());
+        transaction.setIsLoan(transactionDto.getIsLoan());
 
         return transaction;
     }
