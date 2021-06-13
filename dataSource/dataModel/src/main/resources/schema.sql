@@ -29,14 +29,15 @@ CREATE TABLE accounts
 
 CREATE TABLE transactions
 (
-    id     bigint                              NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 ),
-    from_id bigint                              NOT NULL,
+    id            bigint                                                            NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 ),
+    from_id       bigint                                                            NOT NULL,
     from_currency ENUM('USD', 'PLN', 'EUR', 'CHF', 'GBP') DEFAULT 'PLN',
-    to_id   bigint                              NOT NULL,
-    to_currency ENUM('USD', 'PLN', 'EUR', 'CHF', 'GBP') DEFAULT 'PLN',
-    amount double precision                    NOT NULL,
-    date   timestamp DEFAULT current_timestamp NOT NULL,
-    rate   double precision                    NOT NULL,
+    to_id         bigint                                                            NOT NULL,
+    to_currency   ENUM('USD', 'PLN', 'EUR', 'CHF', 'GBP') DEFAULT 'PLN',
+    amount        double precision                                                  NOT NULL,
+    date          timestamp                               DEFAULT current_timestamp NOT NULL,
+    rate          double precision                                                  NOT NULL,
+    is_loan       boolean                                                           NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT fk_from_id FOREIGN KEY (from_id) REFERENCES accounts (id),
     CONSTRAINT fk_to_id FOREIGN KEY (to_id) REFERENCES accounts (id)

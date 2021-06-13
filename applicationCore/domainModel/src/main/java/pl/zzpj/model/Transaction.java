@@ -17,4 +17,5 @@ public class Transaction {
     private BigDecimal amount;
     private Timestamp date;
     private BigDecimal rate;
+    private Boolean isLoan;
 }

@@ -12,11 +12,12 @@ public class TransactionMapper {
 
         transactionEnt.setDate(transaction.getDate());
         transactionEnt.setAmount(transaction.getAmount());
-        transactionEnt.setFromId((AccountEnt) AccountMapper.mapToAccountEnt(transaction.getFrom()));
+        transactionEnt.setFromId(AccountMapper.mapToAccountEnt(transaction.getFrom()));
         transactionEnt.setFromCurrency(CurrencyMapper.mapToCurrencyEnt(transaction.getFromCurrency()));
-        transactionEnt.setToId((AccountEnt) AccountMapper.mapToAccountEnt(transaction.getTo()));
+        transactionEnt.setToId(AccountMapper.mapToAccountEnt(transaction.getTo()));
         transactionEnt.setToCurrency(CurrencyMapper.mapToCurrencyEnt(transaction.getToCurrency()));
         transactionEnt.setRate(transaction.getRate());
+        transactionEnt.setIsLoan(transaction.getIsLoan());
 
         return transactionEnt;
     }
@@ -31,6 +32,7 @@ public class TransactionMapper {
         transaction.setTo(AccountMapper.mapToAccount(transactionEnt.getToId()));
         transaction.setToCurrency(CurrencyMapper.mapToCurrency(transactionEnt.getToCurrency()));
         transaction.setRate(transactionEnt.getRate());
+        transaction.setIsLoan(transactionEnt.getIsLoan());
 
         return transaction;
     }
