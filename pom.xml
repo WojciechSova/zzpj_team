@@ -169,7 +169,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <workingDirectory>../spa</workingDirectory>
+                    <workingDirectory>spa</workingDirectory>
                 </configuration>
             </plugin>
 
