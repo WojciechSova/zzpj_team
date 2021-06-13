@@ -1,1 +1,1 @@
-web: java -Dserver.port=8080 -Dspring.profiles.active=default -jar web/target/web-0.1-SNAPSHOT.jar
+web: java -Dserver.port=$PORT -Dspring.profiles.active=default -jar web/target/web-0.1-SNAPSHOT.jar
