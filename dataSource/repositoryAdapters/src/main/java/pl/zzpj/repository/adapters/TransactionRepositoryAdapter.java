@@ -31,6 +31,11 @@ public class TransactionRepositoryAdapter implements TransactionPort {
     }
 
     @Override
+    public void addTransaction(Transaction transaction) {
+        this.transactionRepository.save(TransactionMapper.mapToTransactionEnt(transaction));
+    }
+
+    @Override
     public void withdraw(Account account, BigDecimal amount) {
         AccountEnt acc = accountRepository.findByLogin(account.getLogin());
         BigDecimal accountState = acc.getAccountState();

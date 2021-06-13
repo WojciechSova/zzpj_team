@@ -36,7 +36,9 @@ class TransactionMapperTest {
         transaction.setAmount(BigDecimal.valueOf(100));
         transaction.setDate(timestamp);
         transaction.setFrom(from);
+        transaction.setFromCurrency(Currency.CHF);
         transaction.setTo(to);
+        transaction.setToCurrency(Currency.EUR);
 
         TransactionEnt transactionEnt = TransactionMapper.mapToTransactionEnt(transaction);
 
@@ -64,7 +66,9 @@ class TransactionMapperTest {
         transactionEnt.setAmount(BigDecimal.valueOf(100));
         transactionEnt.setDate(timestamp);
         transactionEnt.setFromId(from);
+        transactionEnt.setFromCurrency(CurrencyEnt.USD);
         transactionEnt.setToId(to);
+        transactionEnt.setToCurrency(CurrencyEnt.EUR);
 
         Transaction transaction = TransactionMapper.mapToTransaction(transactionEnt);
 

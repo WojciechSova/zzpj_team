@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface TransactionPort {
 
+    void addTransaction(Transaction transaction);
+
     void withdraw(Account account, BigDecimal amount);
 
     void deposit(Account account, BigDecimal amount);
