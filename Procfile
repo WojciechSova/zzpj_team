@@ -1,1 +1,1 @@
-web: java -jar /rest/restControllers/target/restControllers-0.1-SNAPSHOT.jar
+web: java -jar rest/restControllers/target/restControllers-0.1-SNAPSHOT.jar
