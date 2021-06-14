@@ -40,6 +40,12 @@ export class AccountComponent implements OnInit {
         );
     }
 
+    refresh(): void {
+        this.getAccount();
+        this.getMaxLoan();
+    }
+
+
     deposit(value: string) : any {
         this.transactionService.deposit(value).subscribe();
     }

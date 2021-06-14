@@ -14,7 +14,7 @@ export class AuthService {
     constructor(private http: HttpClient,
                 private cookieService: CookieService,
                 private router: Router) {
-        this.url = 'http://localhost:8080';
+        this.url = 'https://zzpj-team.herokuapp.com';
     }
 
     auth(login: string, password: string): any {
