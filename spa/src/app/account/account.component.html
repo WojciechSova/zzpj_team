@@ -40,7 +40,16 @@
         <p class="flex-items">
             <input #transactionValue placeholder="Amount to transfer" type="number"/>
             <input #accountNumber placeholder="Account number" type="number"/>
-            <button (click)="transfer(transactionValue.value, accountNumber.value); transactionValue.value=''; accountNumber.value=''">Transfer</button>
+            <button
+                (click)="transfer(transactionValue.value, accountNumber.value); transactionValue.value=''; accountNumber.value=''">
+                Transfer
+            </button>
+        </p>
+        <h2 class="flex-items">You can take: {{maxLoan}} {{account.currency}}</h2>
+
+        <p class="flex-items">
+            <input #loanValue placeholder="Account number" type="number"/>
+            <button (click)="takeLoan(loanValue.value); loanValue.value=''">Take Loan</button>
         </p>
     </div>
 </div>

@@ -30,4 +30,12 @@ export class TransactionService {
     transfer(value: string, accountNumber: string): any {
         return this.http.post(this.url + '/transactions/transfer/' + accountNumber, value);
     }
+
+    getMaxLoan(): any {
+
+    }
+
+    takeLoan(value: string): any {
+        return this.http.post(this.url + '/transactions/loan', value);
+    }
 }
