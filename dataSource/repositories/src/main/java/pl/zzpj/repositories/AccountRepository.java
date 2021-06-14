@@ -7,4 +7,5 @@ import pl.zzpj.entities.AccountEnt;
 @Repository
 public interface AccountRepository extends JpaRepository<AccountEnt, Long> {
     AccountEnt findByLogin(String login);
+    AccountEnt findByAccountNumber(String accountNumber);
 }

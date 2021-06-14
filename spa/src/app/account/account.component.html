@@ -1,7 +1,10 @@
-<div class="flex-item">
+<div class="flex-item" xmlns="http://www.w3.org/1999/html">
     <div class="links">
         <a routerLink="/main">Main page</a>
     </div>
+    <p>
+        <button (click)="getAccount()">Refresh</button>
+    </p>
     <table class="rtable">
         <tr>
             <td>Login</td>
@@ -24,4 +27,33 @@
             <td>{{account.currency}}</td>
         </tr>
     </table>
+
+    <div class="flex-item">
+        <p class="flex-items">
+            <input #withdrawValue placeholder="Amount to withdraw" type="number"/>
+            <button (click)="withdraw(withdrawValue.value); withdrawValue.value=''">Withdraw</button>
+        </p>
+        <p class="flex-items">
+            <input #depositValue placeholder="Amount to deposit" type="number"/>
+            <button (click)="deposit(depositValue.value); depositValue.value=''">Deposit</button>
+        </p>
+        <p class="flex-items">
+            <input #transactionValue placeholder="Amount to transfer" type="number"/>
+            <input #accountNumber placeholder="Account number" type="number"/>
+            <button
+                (click)="transfer(transactionValue.value, accountNumber.value); transactionValue.value=''; accountNumber.value=''">
+                Transfer
+            </button>
+        </p>
+        <h2 class="flex-items">You can take: {{maxLoan}} {{account.currency}}</h2>
+
+        <p class="flex-items">
+            <input #loanValue placeholder="Loan amount" type="number"/>
+            <button (click)="takeLoan(loanValue.value); loanValue.value=''">Take Loan</button>
+        </p>
+        <p class="flex-items">
+            <input #payBackLoanValue placeholder="Pay back loan amount" type="number"/>
+            <button (click)="payBackLoan(payBackLoanValue.value); payBackLoanValue.value=''">Pay back Loan</button>
+        </p>
+    </div>
 </div>

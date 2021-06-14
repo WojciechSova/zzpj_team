@@ -27,7 +27,7 @@ export const httpInterceptorProviders = [
         AddAccountComponent,
         EditUserComponent,
         TransactionsComponent,
-        AccountComponent
+        AccountComponent,
     ],
     imports: [
         BrowserModule,

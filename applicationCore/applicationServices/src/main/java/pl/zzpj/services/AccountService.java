@@ -51,7 +51,6 @@ public class AccountService implements AccountCRUDUseCase, SignInUseCase {
     public void updateAccount(String login, Account account) {
         Account acc = accountCRUDPort.findByLogin(login);
         AccessLevel accLvl = accessLevelCRUDPort.findByLevel(account.getAccessLevel().getLevel());
-        acc.setCurrency(account.getCurrency());
         if (account.getPassword() != null && !account.getPassword().isBlank()) {
             acc.setPassword(account.getPassword());
         }

@@ -9,13 +9,15 @@ import java.util.List;
 
 public interface TransactionUseCase {
 
-    void withdraw(Account account, BigDecimal amount);
+    void withdraw(String login, BigDecimal amount);
 
-    void deposit(Account account, BigDecimal amount);
+    void deposit(String login, BigDecimal amount);
 
-    void transfer(Account from, Account to, BigDecimal amount, BigDecimal rate) throws Exception;
+    void transfer(String loginFrom, String accountNumberTo, BigDecimal amount) throws Exception;
 
     void takeLoan(String login, BigDecimal amount) throws LoanNotAvailableException;
+
+    void payBackLoan(String login, BigDecimal amount);
 
     List<Transaction> findAll();
 }

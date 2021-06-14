@@ -11,11 +11,6 @@
                placeholder="*First name" required>
         <input [(ngModel)]="account.lastName" type="text" id="lastName" name="Last name"
                placeholder="*Last name" required>
-        <select id="select-currency" [(ngModel)]="account.currency" name="currency">
-            <option *ngFor="let curr of currencies">
-                {{curr}}
-            </option>
-        </select>
         <select id="select-access-level" [(ngModel)]="account.accessLevel.level" name="accessLevel">
             <option *ngFor="let al of accessLevels">
                 {{al}}
