@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 class LoanCalculatorTest {
@@ -40,7 +41,7 @@ class LoanCalculatorTest {
         transaction1.setTo(account);
         transaction1.setToCurrency(account.getCurrency());
         transaction1.setFromCurrency(account.getCurrency());
-        transaction1.setAmount(BigDecimal.valueOf(10000L));
+        transaction1.setAmount(BigDecimal.valueOf(5000L));
         transaction1.setRate(BigDecimal.ONE);
         transaction1.setDate(Timestamp.from(Instant.now()));
         transaction1.setIsLoan(true);
@@ -49,7 +50,7 @@ class LoanCalculatorTest {
         transaction2.setFrom(account);
         transaction2.setToCurrency(account.getCurrency());
         transaction2.setFromCurrency(account.getCurrency());
-        transaction2.setAmount(BigDecimal.valueOf(2700L));
+        transaction2.setAmount(BigDecimal.valueOf(5500L));
         transaction2.setRate(BigDecimal.ONE);
         transaction2.setDate(Timestamp.from(Instant.now()));
         transaction2.setIsLoan(true);
@@ -76,6 +77,6 @@ class LoanCalculatorTest {
 
         BigDecimal maxLoan = loanCalculator.calculateMaxLoanAmount(account);
 
-        System.out.println(maxLoan);
+        assertEquals(BigDecimal.valueOf(709890, 2), maxLoan);
     }
 }

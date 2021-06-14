@@ -22,7 +22,7 @@ public class TrustedStrategy extends LoanCalcStrategy {
                 withdrawals);
 
         for (Transaction inputTransaction : inputTransactions) {
-            outMap.put(inputTransaction, BigDecimal.valueOf(1.));
+            inMap.put(inputTransaction, BigDecimal.valueOf(1.));
         }
         for (Transaction outputTransaction : outputTransactions) {
             outMap.put(outputTransaction, BigDecimal.valueOf(1.));
