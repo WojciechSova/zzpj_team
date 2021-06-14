@@ -17,18 +17,20 @@ abstract class LoanCalcStrategy {
                                          List<Transaction> loanPaidTransactions);
 
     protected BigDecimal calcAvgMonthlyAmount(Map<Transaction, Double> transactions) {
-        List<Transaction> pastSixMonths = transactions.keySet().stream()
+        BigDecimal amount = BigDecimal.ZERO;
+
+        for (Transaction transaction : transactions.keySet()) {
+            amount = amount.add(transaction.getAmount().multiply(BigDecimal.valueOf(transactions.get(transaction))));
+        }
+        return amount.divide(BigDecimal.valueOf(6));
+    }
+
+    protected List<Transaction> getLastSixMonths(List<Transaction> transactions) {
+        return transactions.stream()
                 .filter(
                         transaction -> transaction.getDate()
                                 .after(Timestamp.from(Instant.now().minus(180, ChronoUnit.DAYS)))
                 ).collect(Collectors.toList());
-
-        BigDecimal amount = BigDecimal.ZERO;
-
-        for (Transaction transaction : pastSixMonths) {
-            amount = amount.add(transaction.getAmount().multiply(BigDecimal.valueOf(transactions.get(transaction))));
-        }
-        return amount.divide(BigDecimal.valueOf(6));
     }
 
 }
