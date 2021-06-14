@@ -37,6 +37,10 @@ public class TransactionService implements TransactionUseCase {
 
     @Override
     public void withdraw(String login, BigDecimal amount) {
+        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("You cannot withdraw that amount of money");
+        }
+
         Account acc = accountCRUDPort.findByLogin(login);
         BigDecimal accountState = acc.getAccountState();
         if (accountState.subtract(amount).doubleValue() >= 0) {
@@ -61,6 +65,10 @@ public class TransactionService implements TransactionUseCase {
 
     @Override
     public void deposit(String login, BigDecimal amount) {
+        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("You cannot deposit that amount of money");
+        }
+
         Account acc = accountCRUDPort.findByLogin(login);
         BigDecimal accountState = acc.getAccountState();
         acc.setAccountState(accountState.add(amount));
@@ -80,6 +88,10 @@ public class TransactionService implements TransactionUseCase {
 
     @Override
     public void transfer(String loginFrom, String accountNumberTo, BigDecimal amount) throws RequestFailedException, UnirestException {
+        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("You cannot transfer that amount of money");
+        }
+
         Account accFrom = accountCRUDPort.findByLogin(loginFrom);
         Account accTo = accountCRUDPort.findByAccountNumber(accountNumberTo);
         BigDecimal accountState = accFrom.getAccountState();
