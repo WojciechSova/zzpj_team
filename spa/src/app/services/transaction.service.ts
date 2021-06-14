@@ -38,4 +38,8 @@ export class TransactionService {
     takeLoan(value: string): any {
         return this.http.post(this.url + '/transactions/loan', value);
     }
+
+    payBackLoan(value: string): any {
+        return this.http.post(this.url + '/transactions/payBackLoan', value);
+    }
 }

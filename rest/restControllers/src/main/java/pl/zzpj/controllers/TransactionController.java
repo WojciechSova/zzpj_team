@@ -35,6 +35,12 @@ public class TransactionController {
     }
 
     @CrossOrigin
+    @PostMapping(path = "payBackLoan")
+    public void payBackLoan(@RequestBody String amount, Principal principal) {
+        transactionRestAdapter.payBackLoan(principal.getName(), amount);
+    }
+
+    @CrossOrigin
     @PostMapping("/withdraw")
     public ResponseEntity<?> withdraw(@RequestBody String amount, Principal principal) {
         transactionRestAdapter.withdraw(amount, principal.getName());

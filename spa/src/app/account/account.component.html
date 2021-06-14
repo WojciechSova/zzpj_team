@@ -48,8 +48,12 @@
         <h2 class="flex-items">You can take: {{maxLoan}} {{account.currency}}</h2>
 
         <p class="flex-items">
-            <input #loanValue placeholder="Account number" type="number"/>
+            <input #loanValue placeholder="Loan amount" type="number"/>
             <button (click)="takeLoan(loanValue.value); loanValue.value=''">Take Loan</button>
+        </p>
+        <p class="flex-items">
+            <input #payBackLoanValue placeholder="Pay back loan amount" type="number"/>
+            <button (click)="payBackLoan(payBackLoanValue.value); payBackLoanValue.value=''">Pay back Loan</button>
         </p>
     </div>
 </div>

@@ -60,4 +60,8 @@ export class AccountComponent implements OnInit {
     takeLoan(value: string) : any {
         this.transactionService.takeLoan(value).subscribe();
     }
+
+    payBackLoan(value: string) : any {
+        this.transactionService.payBackLoan(value).subscribe();
+    }
 }

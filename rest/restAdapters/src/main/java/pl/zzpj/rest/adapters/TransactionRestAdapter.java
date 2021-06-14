@@ -48,4 +48,8 @@ public class TransactionRestAdapter {
     public void transfer(String loginFrom, String accountNumberTo, String amount) throws Exception {
         transactionUseCase.transfer(loginFrom, accountNumberTo, new BigDecimal(amount));
     }
+
+    public void payBackLoan(String login, String amount) {
+        transactionUseCase.payBackLoan(login, new BigDecimal(amount));
+    }
 }
