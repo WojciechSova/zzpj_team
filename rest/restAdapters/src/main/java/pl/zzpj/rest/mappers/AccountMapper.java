@@ -8,6 +8,10 @@ import pl.zzpj.dto.AccountDto;
 public class AccountMapper {
 
     public static AccountDto mapToAccountDto(Account account) {
+        if (account == null) {
+            return null;
+        }
+
         AccountDto accountDto = new AccountDto();
         accountDto.setFirstName(account.getFirstName());
         accountDto.setLastName(account.getLastName());
@@ -30,6 +34,10 @@ public class AccountMapper {
     }
 
     public static Account mapToAccount(AccountDto accountDto) {
+        if (accountDto == null) {
+            return null;
+        }
+
         Account account = new Account();
 
         account.setFirstName(accountDto.getFirstName());

@@ -87,7 +87,7 @@ public class TransactionServiceTest {
         Transaction transaction = transactionCaptor.getValue();
         assertEquals(transaction.getFrom(), from);
         assertEquals(transaction.getFromCurrency(), from.getCurrency());
-        assertEquals(transaction.getTo(), from);
+        assertEquals(transaction.getTo(), null);
         assertEquals(transaction.getToCurrency(), from.getCurrency());
         assertEquals(transaction.getAmount(), BigDecimal.valueOf(-2000));
         assertEquals(transaction.getRate(), BigDecimal.valueOf(1));
@@ -107,7 +107,7 @@ public class TransactionServiceTest {
         verify(transactionPort).addTransaction(transactionCaptor.capture());
 
         Transaction transaction = transactionCaptor.getValue();
-        assertEquals(transaction.getFrom(), from);
+        assertEquals(transaction.getFrom(), null);
         assertEquals(transaction.getFromCurrency(), from.getCurrency());
         assertEquals(transaction.getTo(), from);
         assertEquals(transaction.getToCurrency(), from.getCurrency());

@@ -46,7 +46,7 @@ public class TransactionService implements TransactionUseCase {
             Transaction transaction = new Transaction();
             transaction.setFrom(acc);
             transaction.setFromCurrency(acc.getCurrency());
-            transaction.setTo(acc);
+            transaction.setTo(null);
             transaction.setToCurrency(acc.getCurrency());
             transaction.setAmount(amount.multiply(new BigDecimal(-1)));
             transaction.setRate(new BigDecimal(1));
@@ -67,7 +67,7 @@ public class TransactionService implements TransactionUseCase {
         accountCRUDPort.updateAccount(acc);
 
         Transaction transaction = new Transaction();
-        transaction.setFrom(acc);
+        transaction.setFrom(null);
         transaction.setFromCurrency(acc.getCurrency());
         transaction.setTo(acc);
         transaction.setToCurrency(acc.getCurrency());
