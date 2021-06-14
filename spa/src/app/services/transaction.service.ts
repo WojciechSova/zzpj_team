@@ -9,7 +9,7 @@ export class TransactionService {
     private readonly url: string;
 
     constructor(private http: HttpClient) {
-        this.url = 'http://localhost:8080';
+        this.url = 'https://zzpj-team.herokuapp.com';
     }
 
     getTransactions(): any {
