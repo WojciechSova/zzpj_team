@@ -30,6 +30,9 @@ public class TransactionServiceTest {
     @InjectMocks
     private TransactionService transactionService;
 
+    @Mock
+    private CurrencyExchangeService currencyExchangeService;
+
     @Spy
     private AccountCRUDPort accountCRUDPort;
 
@@ -63,6 +66,7 @@ public class TransactionServiceTest {
 
         when(accountCRUDPort.findByLogin(from.getLogin())).thenReturn(from);
         when(accountCRUDPort.findByLogin(to.getLogin())).thenReturn(to);
+        when(accountCRUDPort.findByAccountNumber(to.getLogin())).thenReturn(to);
 
         account.setCurrency(Currency.EUR);
         account.setPassword("pw");
@@ -111,25 +115,26 @@ public class TransactionServiceTest {
         assertEquals(transaction.getRate(), BigDecimal.valueOf(1));
     }
 
-//    @Test
-//    void transferTest() throws RequestFailedException, UnirestException {
-//        transactionService.transfer("konto1", "konto2", BigDecimal.valueOf(2000));
-//
-//        assertEquals(BigDecimal.valueOf(6999.), from.getAccountState());
-//        assertEquals(BigDecimal.valueOf(3111.), to.getAccountState());
-//
-//        verify(accountCRUDPort).updateAccount(from);
-//        verify(accountCRUDPort).updateAccount(to);
-//        verify(transactionPort).addTransaction(transactionCaptor.capture());
-//
-//        Transaction transaction = transactionCaptor.getValue();
-//        assertEquals(transaction.getFrom(), from);
-//        assertEquals(transaction.getFromCurrency(), from.getCurrency());
-//        assertEquals(transaction.getTo(), to);
-//        assertEquals(transaction.getToCurrency(), to.getCurrency());
-//        assertEquals(transaction.getAmount(), BigDecimal.valueOf(2000));
-//        assertEquals(transaction.getRate(), BigDecimal.valueOf(1.5));
-//    }
+    @Test
+    void transferTest() throws RequestFailedException, UnirestException {
+        when(currencyExchangeService.exchangeFromTo(any(), any())).thenReturn(new BigDecimal("1.5"));
+        transactionService.transfer("konto1", "konto2", BigDecimal.valueOf(2000));
+
+        assertEquals(BigDecimal.valueOf(7999.), from.getAccountState());
+        assertEquals(BigDecimal.valueOf(3111.), to.getAccountState());
+
+        verify(accountCRUDPort).updateAccount(from);
+        verify(accountCRUDPort).updateAccount(to);
+        verify(transactionPort).addTransaction(transactionCaptor.capture());
+
+        Transaction transaction = transactionCaptor.getValue();
+        assertEquals(transaction.getFrom(), from);
+        assertEquals(transaction.getFromCurrency(), from.getCurrency());
+        assertEquals(transaction.getTo(), to);
+        assertEquals(transaction.getToCurrency(), to.getCurrency());
+        assertEquals(transaction.getAmount(), BigDecimal.valueOf(2000));
+        assertEquals(transaction.getRate(), BigDecimal.valueOf(1.5));
+    }
 
     @Test
     void takeLoan() {

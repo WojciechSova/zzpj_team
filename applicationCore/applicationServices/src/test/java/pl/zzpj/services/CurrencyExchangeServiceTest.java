@@ -13,9 +13,10 @@ class CurrencyExchangeServiceTest {
 
     @Test
     void exchangeFromTo() throws Exception {
+        CurrencyExchangeService currencyExchangeService = new CurrencyExchangeService();
         assertNotEquals(BigDecimal.valueOf(1.0),
-                CurrencyExchangeService.exchangeFromTo(Currency.EUR, Currency.PLN));
+                currencyExchangeService.exchangeFromTo(Currency.EUR, Currency.PLN));
         assertEquals(BigDecimal.valueOf(1.0),
-                CurrencyExchangeService.exchangeFromTo(Currency.EUR, Currency.EUR));
+                currencyExchangeService.exchangeFromTo(Currency.EUR, Currency.EUR));
     }
 }
