@@ -83,13 +83,11 @@ class AccountServiceTest {
 
     @Test
     void updateAccount() {
-        account1.setCurrency(Currency.EUR);
         account1.setPassword("pw");
         account1.setFirstName("fn");
         account1.setLastName("ln");
         account1.setAccessLevel(null);
 
-        account2.setCurrency(Currency.GBP);
         account2.setPassword("pw1");
         account2.setFirstName("fn1");
         account2.setLastName("ln1");
@@ -103,7 +101,6 @@ class AccountServiceTest {
 
         accountService.updateAccount(login1, account2);
 
-        assertEquals(account2.getCurrency(), account1.getCurrency());
         assertEquals(account2.getPassword(), account1.getPassword());
         assertEquals(account2.getFirstName(), account1.getFirstName());
         assertEquals(account2.getLastName(), account1.getLastName());

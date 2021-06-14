@@ -14,13 +14,6 @@ export class EditUserComponent implements OnInit {
 
     public account: Account;
 
-    public currencies = [
-        'PLN',
-        'USD',
-        'CHF',
-        'EUR',
-        'GBP',
-    ];
     public accessLevels = [
         'CLIENT',
         'ADMIN',
