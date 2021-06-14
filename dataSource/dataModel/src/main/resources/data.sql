@@ -15,4 +15,5 @@ VALUES ('admin', '0885c94ed2e94369bafab182efc19c41624dd8f2b12b79fdfd1c4e8a740397
 INSERT INTO transactions (from_id, from_currency, to_id, to_currency, amount, rate, is_loan)
 VALUES (1, 'PLN', 2, 'EUR', 10, 2.50, false),
        (2, 'PLN', 3, 'EUR', 15, 3.25, false),
+       (null, 'PLN', 1, 'EUR', 1500, 3.25, false),
        (2, 'EUR', 4, 'PLN', 5, 0.9, false);
