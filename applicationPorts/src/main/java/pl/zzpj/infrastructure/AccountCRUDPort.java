@@ -14,5 +14,7 @@ public interface AccountCRUDPort {
 
     Account findByLogin(String login);
 
+    Account findByAccountNumber(String accountNumber);
+
     List<Account> findAll();
 }

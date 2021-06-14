@@ -1,9 +1,12 @@
 package pl.zzpj.services;
 
+import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CurrencyEditor;
 import org.springframework.stereotype.Service;
 import pl.zzpj.controller.TransactionUseCase;
 import pl.zzpj.exceptions.LoanNotAvailableException;
+import pl.zzpj.exceptions.RequestFailedException;
 import pl.zzpj.infrastructure.AccountCRUDPort;
 import pl.zzpj.infrastructure.TransactionPort;
 import pl.zzpj.model.Account;
@@ -30,8 +33,8 @@ public class TransactionService implements TransactionUseCase {
     }
 
     @Override
-    public void withdraw(Account account, BigDecimal amount) {
-        Account acc = accountCRUDPort.findByLogin(account.getLogin());
+    public void withdraw(String login, BigDecimal amount) {
+        Account acc = accountCRUDPort.findByLogin(login);
         BigDecimal accountState = acc.getAccountState();
         if (accountState.subtract(amount).doubleValue() >= 0) {
             acc.setAccountState(accountState.subtract(amount));
@@ -45,6 +48,7 @@ public class TransactionService implements TransactionUseCase {
             transaction.setAmount(amount.multiply(new BigDecimal(-1)));
             transaction.setRate(new BigDecimal(1));
             transaction.setDate(Timestamp.from(Instant.now()));
+            transaction.setIsLoan(false);
             transactionPort.addTransaction(transaction);
         }
         else {
@@ -53,8 +57,8 @@ public class TransactionService implements TransactionUseCase {
     }
 
     @Override
-    public void deposit(Account account, BigDecimal amount) {
-        Account acc = accountCRUDPort.findByLogin(account.getLogin());
+    public void deposit(String login, BigDecimal amount) {
+        Account acc = accountCRUDPort.findByLogin(login);
         BigDecimal accountState = acc.getAccountState();
         acc.setAccountState(accountState.add(amount));
         accountCRUDPort.updateAccount(acc);
@@ -67,17 +71,19 @@ public class TransactionService implements TransactionUseCase {
         transaction.setAmount(amount);
         transaction.setRate(new BigDecimal(1));
         transaction.setDate(Timestamp.from(Instant.now()));
+        transaction.setIsLoan(false);
         transactionPort.addTransaction(transaction);
     }
 
     @Override
-    public void transfer(Account from, Account to, BigDecimal amount, BigDecimal rate) {
-        Account accFrom = accountCRUDPort.findByLogin(from.getLogin());
-        Account accTo = accountCRUDPort.findByLogin(to.getLogin());
+    public void transfer(String loginFrom, String accountNumberTo, BigDecimal amount) throws RequestFailedException, UnirestException {
+        Account accFrom = accountCRUDPort.findByLogin(loginFrom);
+        Account accTo = accountCRUDPort.findByAccountNumber(accountNumberTo);
         BigDecimal accountState = accFrom.getAccountState();
+        BigDecimal rate = CurrencyExchangeService.exchangeFromTo(accFrom.getCurrency(), accTo.getCurrency());
         if (accountState.subtract(amount).doubleValue() >= 0) {
             BigDecimal convertedAmount = amount.multiply(BigDecimal.valueOf(rate.doubleValue()));
-            accFrom.setAccountState(accFrom.getAccountState().subtract(convertedAmount));
+            accFrom.setAccountState(accFrom.getAccountState().subtract(amount));
             accTo.setAccountState(accTo.getAccountState().add(convertedAmount));
             accountCRUDPort.updateAccount(accFrom);
             accountCRUDPort.updateAccount(accTo);
@@ -90,6 +96,7 @@ public class TransactionService implements TransactionUseCase {
             transaction.setAmount(amount);
             transaction.setRate(rate);
             transaction.setDate(Timestamp.from(Instant.now()));
+            transaction.setIsLoan(false);
             transactionPort.addTransaction(transaction);
         }
         else {

@@ -50,6 +50,11 @@ public class AccountRepositoryAdapter implements AccountCRUDPort {
     }
 
     @Override
+    public Account findByAccountNumber(String accountNumber) {
+        return AccountMapper.mapToAccount(accountRepository.findByAccountNumber(accountNumber));
+    }
+
+    @Override
     public List<Account> findAll() {
         return accountRepository.findAll().stream().map(AccountMapper::mapToAccount).collect(Collectors.toList());
     }
