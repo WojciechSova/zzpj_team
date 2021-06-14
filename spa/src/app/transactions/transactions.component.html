@@ -14,9 +14,9 @@
             <td>Loan</td>
         </tr>
         <tr *ngFor="let transaction of transactions">
-            <td>{{transaction.from.login}}</td>
+            <td>{{transaction.from?.login}}</td>
             <td>{{transaction.fromCurrency}}</td>
-            <td>{{transaction.to.login}}</td>
+            <td>{{transaction.to?.login}}</td>
             <td>{{transaction.toCurrency}}</td>
             <td>{{transaction.amount}}</td>
             <td>{{transaction.rate}}</td>
