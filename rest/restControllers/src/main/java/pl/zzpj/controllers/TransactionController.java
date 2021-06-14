@@ -1,13 +1,13 @@
 package pl.zzpj.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.zzpj.dto.TransactionDto;
+import pl.zzpj.exceptions.LoanNotAvailableRestException;
 import pl.zzpj.rest.adapters.TransactionRestAdapter;
 
+import java.math.BigDecimal;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -25,5 +25,11 @@ public class TransactionController {
     @GetMapping
     public List<TransactionDto> getTransactions() {
         return transactionRestAdapter.findAll();
+    }
+
+    @CrossOrigin
+    @PostMapping
+    public void takeLoan(String amount, Principal principal) throws LoanNotAvailableRestException {
+        transactionRestAdapter.takeLoan(principal.getName(), new BigDecimal(amount));
     }
 }
