@@ -2,13 +2,13 @@ package pl.zzpj.services;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CurrencyEditor;
 import org.springframework.stereotype.Service;
 import pl.zzpj.controller.TransactionUseCase;
 import pl.zzpj.exceptions.LoanNotAvailableException;
 import pl.zzpj.exceptions.RequestFailedException;
 import pl.zzpj.infrastructure.AccountCRUDPort;
 import pl.zzpj.infrastructure.TransactionPort;
+import pl.zzpj.loans.LoanCalculator;
 import pl.zzpj.model.Account;
 import pl.zzpj.model.Transaction;
 
@@ -28,11 +28,14 @@ public class TransactionService implements TransactionUseCase {
 
     private final CurrencyExchangeService currencyExchangeService;
 
+    private final LoanCalculator loanCalculator;
+
     @Autowired
-    public TransactionService(AccountCRUDPort accountCRUDPort, TransactionPort transactionPort, CurrencyExchangeService currencyExchangeService) {
+    public TransactionService(AccountCRUDPort accountCRUDPort, TransactionPort transactionPort, CurrencyExchangeService currencyExchangeService, LoanCalculator loanCalculator) {
         this.accountCRUDPort = accountCRUDPort;
         this.transactionPort = transactionPort;
         this.currencyExchangeService = currencyExchangeService;
+        this.loanCalculator = loanCalculator;
     }
 
     @Override
@@ -127,7 +130,7 @@ public class TransactionService implements TransactionUseCase {
 
         Account account = accountCRUDPort.findByLogin(login);
 
-        if (amount.compareTo(getMaxLoanAmount(account)) > 0) {
+        if (amount.compareTo(getMaxLoanAmount(login)) > 0) {
             throw new LoanNotAvailableException("Loan not available");
         }
 
@@ -147,11 +150,38 @@ public class TransactionService implements TransactionUseCase {
     }
 
     @Override
+    public void payBackLoan(String login, BigDecimal amount) {
+        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("You cannot transfer that amount of money");
+        }
+        Account account = accountCRUDPort.findByLogin(login);
+        if (account.getAccountState().subtract(amount).doubleValue() <= 0) {
+            throw new IllegalStateException("Not enough money");
+        }
+
+        Transaction transaction = new Transaction();
+        transaction.setFrom(account);
+        transaction.setToCurrency(account.getCurrency());
+        transaction.setFromCurrency(account.getCurrency());
+        transaction.setAmount(amount);
+        transaction.setRate(BigDecimal.ONE);
+        transaction.setDate(Timestamp.from(Instant.now()));
+        transaction.setIsLoan(true);
+
+        account.setDebt(account.getDebt().subtract(amount));
+        account.setAccountState(account.getAccountState().subtract(amount));
+        accountCRUDPort.updateAccount(account);
+        transactionPort.addTransaction(transaction);
+    }
+
+    @Override
     public List<Transaction> findAll() {
         return transactionPort.findAll();
     }
 
-    private BigDecimal getMaxLoanAmount(Account account) {
-        return BigDecimal.valueOf(2000L);
+    @Override
+    public BigDecimal getMaxLoanAmount(String login) {
+        Account account = accountCRUDPort.findByLogin(login);
+        return loanCalculator.calculateMaxLoanAmount(account);
     }
 }

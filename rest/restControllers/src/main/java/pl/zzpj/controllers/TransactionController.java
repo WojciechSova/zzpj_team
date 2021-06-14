@@ -29,9 +29,21 @@ public class TransactionController {
     }
 
     @CrossOrigin
+    @GetMapping(path = "maxLoan")
+    public BigDecimal maxLoan(Principal principal) {
+        return transactionRestAdapter.getMaxLoanAmount(principal.getName());
+    }
+
+    @CrossOrigin
     @PostMapping(path = "loan")
     public void takeLoan(@RequestBody String amount, Principal principal) throws LoanNotAvailableRestException {
         transactionRestAdapter.takeLoan(principal.getName(), new BigDecimal(amount));
+    }
+
+    @CrossOrigin
+    @PostMapping(path = "payBackLoan")
+    public void payBackLoan(@RequestBody String amount, Principal principal) {
+        transactionRestAdapter.payBackLoan(principal.getName(), amount);
     }
 
     @CrossOrigin

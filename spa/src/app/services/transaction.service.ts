@@ -9,7 +9,7 @@ export class TransactionService {
     private readonly url: string;
 
     constructor(private http: HttpClient) {
-        this.url = 'http://localhost:8080';
+        this.url = 'https://zzpj-team.herokuapp.com';
     }
 
     getTransactions(): any {
@@ -32,10 +32,14 @@ export class TransactionService {
     }
 
     getMaxLoan(): any {
-
+        return this.http.get(this.url + '/transactions/maxLoan');
     }
 
     takeLoan(value: string): any {
         return this.http.post(this.url + '/transactions/loan', value);
+    }
+
+    payBackLoan(value: string): any {
+        return this.http.post(this.url + '/transactions/payBackLoan', value);
     }
 }
