@@ -38,14 +38,14 @@ public class TransactionController {
     @PostMapping("/withdraw")
     public ResponseEntity<?> withdraw(@RequestBody String amount, Principal principal) {
         transactionRestAdapter.withdraw(amount, principal.getName());
-        return ResponseEntity.ok("ok");
+        return ResponseEntity.ok().build();
     }
 
     @CrossOrigin
     @PostMapping("/deposit")
     public ResponseEntity<?> deposit(@RequestBody String amount, Principal principal) {
         transactionRestAdapter.deposit(amount, principal.getName());
-        return ResponseEntity.ok().body("ok");
+        return ResponseEntity.ok().build();
     }
 
     @CrossOrigin

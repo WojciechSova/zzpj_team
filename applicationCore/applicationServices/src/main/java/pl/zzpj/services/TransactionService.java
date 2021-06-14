@@ -26,10 +26,13 @@ public class TransactionService implements TransactionUseCase {
 
     private final TransactionPort transactionPort;
 
+    private final CurrencyExchangeService currencyExchangeService;
+
     @Autowired
-    public TransactionService(AccountCRUDPort accountCRUDPort, TransactionPort transactionPort) {
+    public TransactionService(AccountCRUDPort accountCRUDPort, TransactionPort transactionPort, CurrencyExchangeService currencyExchangeService) {
         this.accountCRUDPort = accountCRUDPort;
         this.transactionPort = transactionPort;
+        this.currencyExchangeService = currencyExchangeService;
     }
 
     @Override
@@ -80,7 +83,7 @@ public class TransactionService implements TransactionUseCase {
         Account accFrom = accountCRUDPort.findByLogin(loginFrom);
         Account accTo = accountCRUDPort.findByAccountNumber(accountNumberTo);
         BigDecimal accountState = accFrom.getAccountState();
-        BigDecimal rate = CurrencyExchangeService.exchangeFromTo(accFrom.getCurrency(), accTo.getCurrency());
+        BigDecimal rate = currencyExchangeService.exchangeFromTo(accFrom.getCurrency(), accTo.getCurrency());
         if (accountState.subtract(amount).doubleValue() >= 0) {
             BigDecimal convertedAmount = amount.multiply(BigDecimal.valueOf(rate.doubleValue()));
             accFrom.setAccountState(accFrom.getAccountState().subtract(amount));
