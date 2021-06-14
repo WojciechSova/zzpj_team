@@ -49,6 +49,10 @@ public class TransactionRestAdapter {
         transactionUseCase.transfer(loginFrom, accountNumberTo, new BigDecimal(amount));
     }
 
+    public void payBackLoan(String login, String amount) {
+        transactionUseCase.payBackLoan(login, new BigDecimal(amount));
+    }
+
     public BigDecimal getMaxLoanAmount(String login) {
         return transactionUseCase.getMaxLoanAmount(login);
     }

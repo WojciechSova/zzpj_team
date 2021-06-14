@@ -17,6 +17,8 @@ public interface TransactionUseCase {
 
     void takeLoan(String login, BigDecimal amount) throws LoanNotAvailableException;
 
+    void payBackLoan(String login, BigDecimal amount);
+
     List<Transaction> findAll();
 
     BigDecimal getMaxLoanAmount(String login);

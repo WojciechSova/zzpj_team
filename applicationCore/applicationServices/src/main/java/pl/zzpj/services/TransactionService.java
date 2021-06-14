@@ -150,6 +150,31 @@ public class TransactionService implements TransactionUseCase {
     }
 
     @Override
+    public void payBackLoan(String login, BigDecimal amount) {
+        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("You cannot transfer that amount of money");
+        }
+        Account account = accountCRUDPort.findByLogin(login);
+        if (account.getAccountState().subtract(amount).doubleValue() <= 0) {
+            throw new IllegalStateException("Not enough money");
+        }
+
+        Transaction transaction = new Transaction();
+        transaction.setFrom(account);
+        transaction.setToCurrency(account.getCurrency());
+        transaction.setFromCurrency(account.getCurrency());
+        transaction.setAmount(amount);
+        transaction.setRate(BigDecimal.ONE);
+        transaction.setDate(Timestamp.from(Instant.now()));
+        transaction.setIsLoan(true);
+
+        account.setDebt(account.getDebt().subtract(amount));
+        account.setAccountState(account.getAccountState().subtract(amount));
+        accountCRUDPort.updateAccount(account);
+        transactionPort.addTransaction(transaction);
+    }
+
+    @Override
     public List<Transaction> findAll() {
         return transactionPort.findAll();
     }
