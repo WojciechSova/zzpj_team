@@ -13,6 +13,7 @@ import pl.zzpj.exceptions.LoanNotAvailableException;
 import pl.zzpj.exceptions.RequestFailedException;
 import pl.zzpj.infrastructure.AccountCRUDPort;
 import pl.zzpj.infrastructure.TransactionPort;
+import pl.zzpj.loans.LoanCalculator;
 import pl.zzpj.model.AccessLevel;
 import pl.zzpj.model.Account;
 import pl.zzpj.model.Currency;
@@ -32,6 +33,9 @@ public class TransactionServiceTest {
 
     @Mock
     private CurrencyExchangeService currencyExchangeService;
+
+    @Mock
+    private LoanCalculator loanCalculator;
 
     @Spy
     private AccountCRUDPort accountCRUDPort;
@@ -139,6 +143,7 @@ public class TransactionServiceTest {
     @Test
     void takeLoan() {
         when(accountCRUDPort.findByLogin("fn")).thenReturn(account);
+        when(loanCalculator.calculateMaxLoanAmount(account)).thenReturn(BigDecimal.valueOf(2000L));
 
         Timestamp before = Timestamp.from(Instant.now().minusMillis(1));
         try {

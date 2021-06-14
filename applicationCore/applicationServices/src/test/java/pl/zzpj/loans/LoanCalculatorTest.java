@@ -34,6 +34,7 @@ class LoanCalculatorTest {
 
         account = new Account();
         account.setCurrency(Currency.EUR);
+        account.setDebt(BigDecimal.ZERO);
 
         Transaction transaction1 = new Transaction();
         transaction1.setTo(account);
