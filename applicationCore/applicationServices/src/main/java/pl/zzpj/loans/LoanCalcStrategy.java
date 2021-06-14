@@ -5,10 +5,15 @@ import pl.zzpj.model.Transaction;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 abstract class LoanCalcStrategy {
+
+    Map<Transaction, BigDecimal> inMap = new HashMap<>();
+    Map<Transaction, BigDecimal> outMap = new HashMap<>();
+
     public abstract BigDecimal calculate(List<Transaction> inputTransactions,
                                          List<Transaction> outputTransactions,
                                          List<Transaction> loanTakenTransactions,
@@ -32,6 +37,24 @@ abstract class LoanCalcStrategy {
             return amount;
         }
         return BigDecimal.ZERO;
+    }
+
+    protected void fillLoansAndNonTransfers(List<Transaction> loanTakenTransactions,
+                                            List<Transaction> loanPaidTransactions,
+                                            List<Transaction> deposits,
+                                            List<Transaction> withdrawals) {
+        for (Transaction loanTakenTransaction : loanTakenTransactions) {
+            outMap.put(loanTakenTransaction, BigDecimal.valueOf(2.));
+        }
+        for (Transaction loanPaidTransaction : loanPaidTransactions) {
+            inMap.put(loanPaidTransaction, BigDecimal.valueOf(2.));
+        }
+        for (Transaction deposit : deposits) {
+            inMap.put(deposit, BigDecimal.valueOf(1.));
+        }
+        for (Transaction withdrawal : withdrawals) {
+            outMap.put(withdrawal, BigDecimal.valueOf(1.));
+        }
     }
 
 }

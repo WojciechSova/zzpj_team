@@ -15,6 +15,22 @@ public class TrustedStrategy extends LoanCalcStrategy {
                                 List<Transaction> deposits,
                                 List<Transaction> withdrawals,
                                 Account account) {
-        return BigDecimal.valueOf(2000);
+
+        fillLoansAndNonTransfers(loanTakenTransactions,
+                loanPaidTransactions,
+                deposits,
+                withdrawals);
+
+        for (Transaction inputTransaction : inputTransactions) {
+            outMap.put(inputTransaction, BigDecimal.valueOf(1.));
+        }
+        for (Transaction outputTransaction : outputTransactions) {
+            outMap.put(outputTransaction, BigDecimal.valueOf(1.));
+        }
+
+        BigDecimal inputs = calcAvgMonthlyAmount(inMap);
+        BigDecimal outputs =  calcAvgMonthlyAmount(outMap);
+
+        return calcAmount(inputs, outputs);
     }
 }

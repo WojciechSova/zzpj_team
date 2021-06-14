@@ -4,6 +4,7 @@ import pl.zzpj.model.Account;
 import pl.zzpj.model.Transaction;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,22 +23,14 @@ public class NotTrustedStrategy extends LoanCalcStrategy {
                                 List<Transaction> deposits,
                                 List<Transaction> withdrawals,
                                 Account account) {
+
         fillAccountMaps(inputTransactions, outputTransactions);
 
-        Map<Transaction, BigDecimal> inMap = new HashMap<>();
-        Map<Transaction, BigDecimal> outMap = new HashMap<>();
-        for (Transaction loanTakenTransaction : loanTakenTransactions) {
-            outMap.put(loanTakenTransaction, BigDecimal.valueOf(2.));
-        }
-        for (Transaction loanPaidTransaction : loanPaidTransactions) {
-            inMap.put(loanPaidTransaction, BigDecimal.valueOf(2.));
-        }
-        for (Transaction deposit : deposits) {
-            inMap.put(deposit, BigDecimal.valueOf(1.));
-        }
-        for (Transaction withdrawal : withdrawals) {
-            outMap.put(withdrawal, BigDecimal.valueOf(1.));
-        }
+        fillLoansAndNonTransfers(loanTakenTransactions,
+                loanPaidTransactions,
+                deposits,
+                withdrawals);
+
         for (Transaction inputTransaction : inputTransactions) {
             outMap.put(inputTransaction, calcInTransactionMultiplier(inputTransaction));
         }
@@ -46,7 +39,7 @@ public class NotTrustedStrategy extends LoanCalcStrategy {
         }
 
         BigDecimal inputs = calcAvgMonthlyAmount(inMap);
-        BigDecimal outputs =  calcAvgMonthlyAmount(outMap);
+        BigDecimal outputs = calcAvgMonthlyAmount(outMap);
 
         return calcAmount(inputs, outputs);
     }
@@ -94,6 +87,6 @@ public class NotTrustedStrategy extends LoanCalcStrategy {
         BigDecimal outFromAccount = outTransactionsByAccount.get(account).stream()
                 .map(Transaction::getAmount)
                 .reduce(BigDecimal.valueOf(0), BigDecimal::add);
-        return inFromAccount.divide(inFromAccount.add(outFromAccount));
+        return inFromAccount.divide(inFromAccount.add(outFromAccount), new MathContext(5));
     }
 }
