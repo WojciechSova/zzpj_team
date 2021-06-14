@@ -32,7 +32,7 @@ export class TransactionService {
     }
 
     getMaxLoan(): any {
-
+        return this.http.get(this.url + '/transactions/maxLoan');
     }
 
     takeLoan(value: string): any {
