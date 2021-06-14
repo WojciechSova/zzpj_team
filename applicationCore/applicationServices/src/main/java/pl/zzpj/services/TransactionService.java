@@ -2,13 +2,13 @@ package pl.zzpj.services;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CurrencyEditor;
 import org.springframework.stereotype.Service;
 import pl.zzpj.controller.TransactionUseCase;
 import pl.zzpj.exceptions.LoanNotAvailableException;
 import pl.zzpj.exceptions.RequestFailedException;
 import pl.zzpj.infrastructure.AccountCRUDPort;
 import pl.zzpj.infrastructure.TransactionPort;
+import pl.zzpj.loans.LoanCalculator;
 import pl.zzpj.model.Account;
 import pl.zzpj.model.Transaction;
 
@@ -28,11 +28,14 @@ public class TransactionService implements TransactionUseCase {
 
     private final CurrencyExchangeService currencyExchangeService;
 
+    private final LoanCalculator loanCalculator;
+
     @Autowired
-    public TransactionService(AccountCRUDPort accountCRUDPort, TransactionPort transactionPort, CurrencyExchangeService currencyExchangeService) {
+    public TransactionService(AccountCRUDPort accountCRUDPort, TransactionPort transactionPort, CurrencyExchangeService currencyExchangeService, LoanCalculator loanCalculator) {
         this.accountCRUDPort = accountCRUDPort;
         this.transactionPort = transactionPort;
         this.currencyExchangeService = currencyExchangeService;
+        this.loanCalculator = loanCalculator;
     }
 
     @Override
@@ -127,7 +130,7 @@ public class TransactionService implements TransactionUseCase {
 
         Account account = accountCRUDPort.findByLogin(login);
 
-        if (amount.compareTo(getMaxLoanAmount(account)) > 0) {
+        if (amount.compareTo(getMaxLoanAmount(login)) > 0) {
             throw new LoanNotAvailableException("Loan not available");
         }
 
@@ -176,7 +179,9 @@ public class TransactionService implements TransactionUseCase {
         return transactionPort.findAll();
     }
 
-    private BigDecimal getMaxLoanAmount(Account account) {
-        return BigDecimal.valueOf(2000L);
+    @Override
+    public BigDecimal getMaxLoanAmount(String login) {
+        Account account = accountCRUDPort.findByLogin(login);
+        return loanCalculator.calculateMaxLoanAmount(account);
     }
 }

@@ -7,14 +7,17 @@ import pl.zzpj.model.Account;
 import pl.zzpj.model.Transaction;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
 public class LoanCalculator {
 
-    private final BigDecimal MIN_TRUSTED_LOAN = BigDecimal.valueOf(5000);
-    private final BigDecimal MIN_TRUSTED_PAID_LOAN = BigDecimal.valueOf(2750);
+    private final BigDecimal MIN_TRUSTED_LOAN = BigDecimal.valueOf(50000);
+    private final BigDecimal MIN_TRUSTED_PAID_LOAN = BigDecimal.valueOf(27500);
 
     private final TransactionPort transactionPort;
     private LoanCalcStrategy loanCalcStrategy;
@@ -48,26 +51,57 @@ public class LoanCalculator {
             loanCalcStrategy = new NotTrustedStrategy();
         }
 
+        transactions = getLastSixMonths(transactions);
+
         List<Transaction> inputTransactions = transactions.stream()
                 .filter(transaction -> !transaction.getIsLoan())
-                .filter(transaction -> transaction.getTo() == account)
+                .filter(transaction -> transaction.getTo() != null
+                        && transaction.getTo().equals(account)
+                        && transaction.getFrom() != null)
+                .collect(Collectors.toList());
+
+        List<Transaction> deposits = transactions.stream()
+                .filter(transaction -> !transaction.getIsLoan())
+                .filter(transaction -> transaction.getTo() != null
+                        && transaction.getTo().equals(account)
+                        && transaction.getFrom() == null)
                 .collect(Collectors.toList());
 
         List<Transaction> outputTransactions = transactions.stream()
                 .filter(transaction -> !transaction.getIsLoan())
-                .filter(transaction -> transaction.getFrom() == account)
+                .filter(transaction -> transaction.getFrom() != null
+                        && transaction.getFrom().equals(account)
+                        && transaction.getTo() != null)
+                .collect(Collectors.toList());
+
+        List<Transaction> withdrawals = transactions.stream()
+                .filter(transaction -> !transaction.getIsLoan())
+                .filter(transaction -> transaction.getFrom() != null
+                        && transaction.getFrom().equals(account)
+                        && transaction.getTo() == null)
                 .collect(Collectors.toList());
 
         List<Transaction> loanPaidTransactions = transactions.stream()
-                .filter(transaction -> transaction.getIsLoan())
-                .filter(transaction -> transaction.getFrom() == account)
+                .filter(Transaction::getIsLoan)
+                .filter(transaction -> transaction.getFrom() != null
+                        && transaction.getFrom().equals(account))
                 .collect(Collectors.toList());
 
         List<Transaction> loanTakenTransactions = transactions.stream()
-                .filter(transaction -> transaction.getIsLoan())
-                .filter(transaction -> transaction.getTo() == account)
+                .filter(Transaction::getIsLoan)
+                .filter(transaction -> transaction.getTo() != null
+                        && transaction.getTo().equals(account))
                 .collect(Collectors.toList());
 
-        return loanCalcStrategy.calculate(inputTransactions, outputTransactions, loanTakenTransactions, loanPaidTransactions);
+        return loanCalcStrategy.calculate(inputTransactions, outputTransactions, loanTakenTransactions,
+                loanPaidTransactions, deposits, withdrawals, account);
+    }
+
+    private List<Transaction> getLastSixMonths(List<Transaction> transactions) {
+        return transactions.stream()
+                .filter(
+                        transaction -> transaction.getDate()
+                                .after(Timestamp.from(Instant.now().minus(180, ChronoUnit.DAYS)))
+                ).collect(Collectors.toList());
     }
 }

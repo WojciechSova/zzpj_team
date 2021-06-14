@@ -20,4 +20,6 @@ public interface TransactionUseCase {
     void payBackLoan(String login, BigDecimal amount);
 
     List<Transaction> findAll();
+
+    BigDecimal getMaxLoanAmount(String login);
 }

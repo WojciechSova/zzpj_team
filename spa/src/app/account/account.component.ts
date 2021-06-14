@@ -21,7 +21,7 @@ export class AccountComponent implements OnInit {
         lastName: "",
         login: ""
     };
-    maxLoan: number =10;
+    maxLoan: String = '';
 
     constructor(private accountService: AccountService,
                 private transactionService: TransactionService) {
@@ -53,8 +53,9 @@ export class AccountComponent implements OnInit {
     }
 
     getMaxLoan() : any {
-        //TODO
-        this.maxLoan = 20;
+        this.transactionService.getMaxLoan().subscribe((response: String) => {
+            this.maxLoan = response;
+        });
     }
 
     takeLoan(value: string) : any {
