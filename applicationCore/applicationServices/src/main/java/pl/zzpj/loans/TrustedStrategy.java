@@ -31,6 +31,6 @@ public class TrustedStrategy extends LoanCalcStrategy {
         BigDecimal inputs = calcAvgMonthlyAmount(inMap);
         BigDecimal outputs =  calcAvgMonthlyAmount(outMap);
 
-        return calcAmount(inputs, outputs);
+        return calcAmount(inputs, outputs, account.getDebt());
     }
 }

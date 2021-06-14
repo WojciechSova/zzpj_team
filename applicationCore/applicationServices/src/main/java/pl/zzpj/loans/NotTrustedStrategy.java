@@ -32,7 +32,7 @@ public class NotTrustedStrategy extends LoanCalcStrategy {
                 withdrawals);
 
         for (Transaction inputTransaction : inputTransactions) {
-            outMap.put(inputTransaction, calcInTransactionMultiplier(inputTransaction));
+            inMap.put(inputTransaction, calcInTransactionMultiplier(inputTransaction));
         }
         for (Transaction outputTransaction : outputTransactions) {
             outMap.put(outputTransaction, calcOutTransactionMultiplier(outputTransaction));
@@ -41,7 +41,7 @@ public class NotTrustedStrategy extends LoanCalcStrategy {
         BigDecimal inputs = calcAvgMonthlyAmount(inMap);
         BigDecimal outputs = calcAvgMonthlyAmount(outMap);
 
-        return calcAmount(inputs, outputs);
+        return calcAmount(inputs, outputs, account.getDebt());
     }
 
     private void fillAccountMaps(List<Transaction> inputTransactions, List<Transaction> outputTransactions) {
@@ -81,12 +81,22 @@ public class NotTrustedStrategy extends LoanCalcStrategy {
     }
 
     private BigDecimal getRatio(Account account) {
-        BigDecimal inFromAccount = inTransactionsByAccount.get(account).stream()
-                .map(Transaction::getAmount)
-                .reduce(BigDecimal.valueOf(0), BigDecimal::add);
-        BigDecimal outFromAccount = outTransactionsByAccount.get(account).stream()
-                .map(Transaction::getAmount)
-                .reduce(BigDecimal.valueOf(0), BigDecimal::add);
+        BigDecimal inFromAccount;
+        if (inTransactionsByAccount.containsKey(account)) {
+            inFromAccount = inTransactionsByAccount.get(account).stream()
+                    .map(Transaction::getAmount)
+                    .reduce(BigDecimal.valueOf(0), BigDecimal::add);
+        } else {
+            return BigDecimal.ONE;
+        }
+        BigDecimal outFromAccount;
+        if (outTransactionsByAccount.containsKey(account)) {
+            outFromAccount = outTransactionsByAccount.get(account).stream()
+                    .map(Transaction::getAmount)
+                    .reduce(BigDecimal.valueOf(0), BigDecimal::add);
+        } else {
+            return BigDecimal.ONE;
+        }
         return inFromAccount.divide(inFromAccount.add(outFromAccount), new MathContext(5));
     }
 }

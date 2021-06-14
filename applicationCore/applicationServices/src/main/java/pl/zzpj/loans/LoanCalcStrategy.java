@@ -31,8 +31,12 @@ abstract class LoanCalcStrategy {
         return amount.divide(BigDecimal.valueOf(6), new MathContext(5));
     }
 
-    protected BigDecimal calcAmount(BigDecimal input, BigDecimal output) {
-        BigDecimal amount = input.multiply(BigDecimal.valueOf(1.5)).subtract(output).multiply(BigDecimal.valueOf(15));
+    protected BigDecimal calcAmount(BigDecimal input, BigDecimal output, BigDecimal debt) {
+        BigDecimal amount = input
+                .multiply(BigDecimal.valueOf(1.2))
+                .subtract(output)
+                .subtract(debt)
+                .multiply(BigDecimal.valueOf(15));
         if (amount.compareTo(BigDecimal.ZERO) > 0) {
             return amount;
         }
@@ -47,7 +51,7 @@ abstract class LoanCalcStrategy {
             outMap.put(loanTakenTransaction, BigDecimal.valueOf(2.));
         }
         for (Transaction loanPaidTransaction : loanPaidTransactions) {
-            inMap.put(loanPaidTransaction, BigDecimal.valueOf(2.));
+            inMap.put(loanPaidTransaction, BigDecimal.valueOf(1.4));
         }
         for (Transaction deposit : deposits) {
             inMap.put(deposit, BigDecimal.valueOf(1.));
