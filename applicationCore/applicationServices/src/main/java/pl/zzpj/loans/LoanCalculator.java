@@ -48,6 +48,26 @@ public class LoanCalculator {
             loanCalcStrategy = new NotTrustedStrategy();
         }
 
-        return BigDecimal.valueOf(2000L);
+        List<Transaction> inputTransactions = transactions.stream()
+                .filter(transaction -> !transaction.getIsLoan())
+                .filter(transaction -> transaction.getTo() == account)
+                .collect(Collectors.toList());
+
+        List<Transaction> outputTransactions = transactions.stream()
+                .filter(transaction -> !transaction.getIsLoan())
+                .filter(transaction -> transaction.getFrom() == account)
+                .collect(Collectors.toList());
+
+        List<Transaction> loanPaidTransactions = transactions.stream()
+                .filter(transaction -> transaction.getIsLoan())
+                .filter(transaction -> transaction.getFrom() == account)
+                .collect(Collectors.toList());
+
+        List<Transaction> loanTakenTransactions = transactions.stream()
+                .filter(transaction -> transaction.getIsLoan())
+                .filter(transaction -> transaction.getTo() == account)
+                .collect(Collectors.toList());
+
+        return loanCalcStrategy.calculate(inputTransactions, outputTransactions, loanTakenTransactions, loanPaidTransactions);
     }
 }
