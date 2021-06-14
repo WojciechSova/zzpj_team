@@ -8,6 +8,10 @@ import pl.zzpj.model.Account;
 public class AccountMapper {
 
     public static AccountEnt mapToAccountEnt(Account account) {
+        if (account == null) {
+            return null;
+        }
+
         AccountEnt accountEnt = new AccountEnt();
 
         accountEnt.setFirstName(account.getFirstName());
@@ -30,6 +34,9 @@ public class AccountMapper {
     }
 
     public static Account mapToAccount(AccountEnt accountEnt) {
+        if (accountEnt == null) {
+            return null;
+        }
         Account account = new Account();
 
         account.setFirstName(accountEnt.getFirstName());
