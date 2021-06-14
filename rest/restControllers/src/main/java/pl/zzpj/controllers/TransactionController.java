@@ -28,7 +28,7 @@ public class TransactionController {
     }
 
     @CrossOrigin
-    @PostMapping
+    @PostMapping(path = "loan")
     public void takeLoan(String amount, Principal principal) throws LoanNotAvailableRestException {
         transactionRestAdapter.takeLoan(principal.getName(), new BigDecimal(amount));
     }
