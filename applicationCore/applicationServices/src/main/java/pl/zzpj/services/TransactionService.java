@@ -121,6 +121,10 @@ public class TransactionService implements TransactionUseCase {
 
     @Override
     public void takeLoan(String login, BigDecimal amount) throws LoanNotAvailableException {
+        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("You cannot transfer that amount of money");
+        }
+
         Account account = accountCRUDPort.findByLogin(login);
 
         if (amount.compareTo(getMaxLoanAmount(account)) > 0) {
