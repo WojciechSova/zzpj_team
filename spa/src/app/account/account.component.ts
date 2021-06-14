@@ -21,10 +21,12 @@ export class AccountComponent implements OnInit {
         lastName: "",
         login: ""
     };
+    maxLoan: number =10;
 
     constructor(private accountService: AccountService,
                 private transactionService: TransactionService) {
         this.getAccount();
+        this.getMaxLoan();
     }
 
     ngOnInit(): void {
@@ -48,5 +50,14 @@ export class AccountComponent implements OnInit {
 
     transfer(value: string, accountNumber: string) : any {
         this.transactionService.transfer(value, accountNumber).subscribe();
+    }
+
+    getMaxLoan() : any {
+        //TODO
+        this.maxLoan = 20;
+    }
+
+    takeLoan(value: string) : any {
+        this.transactionService.takeLoan(value).subscribe();
     }
 }
