@@ -1,6 +1,7 @@
 package pl.zzpj.services;
 
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ public class AccountService implements AccountCRUDUseCase, SignInUseCase {
 
     @Override
     public void addAccount(Account account) {
+        account.setPassword(DigestUtils.sha512Hex(account.getPassword()));
         account.setAccountState(BigDecimal.ZERO);
         account.setAccountNumber(generateAccountNumber());
         account.setDebt(BigDecimal.ZERO);
